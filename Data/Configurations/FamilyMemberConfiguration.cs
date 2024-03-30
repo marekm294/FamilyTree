@@ -1,15 +1,16 @@
-﻿using Data.Entities;
+﻿using Data.Configurations.Abstraction;
+using Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Data.Configurations;
 
-internal sealed class FamilyMemberConfiguration : IEntityTypeConfiguration<FamilyMemberEntity>
+internal sealed class FamilyMemberConfiguration : DbEntityConfiguration<FamilyMemberEntity>
 {
-    public void Configure(EntityTypeBuilder<FamilyMemberEntity> builder)
+    public override void Configure(EntityTypeBuilder<FamilyMemberEntity> builder)
     {
-        builder
-            .HasKey(f => f.Id);
+        base
+            .Configure(builder);
 
         builder
             .Property(f => f.FirstName)
