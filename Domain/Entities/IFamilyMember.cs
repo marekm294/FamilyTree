@@ -1,4 +1,5 @@
 ﻿using Domain.Entities.Abstraction;
+using Shared.Models.Inputs.FamilyMembers;
 
 namespace Domain.Entities;
 
@@ -12,13 +13,19 @@ public interface IFamilyMember : IEntity
 
     DateTime? DeathDate { get; set; }
 
-    public IFamilyMember InitializeFamilyMember(IFamilyMember familyMember)
+    public void InitializeFamilyMember(CreateFamilyMemberInput createFamilyMemberInput)
     {
-        familyMember.FirstName = FirstName;
-        familyMember.LastName = LastName;
-        familyMember.BirthDate = BirthDate;
-        familyMember.DeathDate = DeathDate;
+        FirstName = createFamilyMemberInput.FirstName;
+        LastName = createFamilyMemberInput.LastName;
+        BirthDate = createFamilyMemberInput.BirthDate;
+        DeathDate = createFamilyMemberInput.DeathDate;
+    }
 
-        return familyMember;
+    public void UpdateFamilyMember(UpdateFamilyMemberInput updateFamilyMemberInput)
+    {
+        FirstName = updateFamilyMemberInput.FirstName;
+        LastName = updateFamilyMemberInput.LastName;
+        BirthDate = updateFamilyMemberInput.BirthDate;
+        DeathDate = updateFamilyMemberInput.DeathDate;
     }
 }

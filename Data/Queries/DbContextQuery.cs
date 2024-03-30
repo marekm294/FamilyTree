@@ -1,4 +1,4 @@
-﻿using Data.Entities.Abstraction;
+﻿using Data.Schemes.Abstraction;
 using Domain.Entities.Abstraction;
 using Microsoft.EntityFrameworkCore;
 using System.Collections;
@@ -6,9 +6,9 @@ using System.Linq.Expressions;
 
 namespace Data.Queries;
 
-internal sealed class DbContextQuery<TEntity, TResult> : IQueryable<TResult>, IAsyncEnumerable<TResult>
-    where TEntity : DbEntity, TResult
-    where TResult : IEntity
+internal sealed class DbContextQuery<TScheme, TEntity> : IQueryable<TEntity>, IAsyncEnumerable<TEntity>
+    where TScheme : DbScheme, TEntity
+    where TEntity : IEntity
 {
     private readonly AppDatabaseContext _appDatabaseContext;
 
@@ -23,9 +23,9 @@ internal sealed class DbContextQuery<TEntity, TResult> : IQueryable<TResult>, IA
 
     public IQueryProvider Provider => Query.Provider;
 
-    protected IQueryable<TResult> Query => CreateQuery();
+    public IQueryable<TEntity> Query => CreateQuery();
 
-    public IEnumerator<TResult> GetEnumerator()
+    public IEnumerator<TEntity> GetEnumerator()
     {
         return Query.GetEnumerator();
     }
@@ -35,17 +35,17 @@ internal sealed class DbContextQuery<TEntity, TResult> : IQueryable<TResult>, IA
         return ((IEnumerable)Query).GetEnumerator();
     }
 
-    public IAsyncEnumerator<TResult> GetAsyncEnumerator(CancellationToken cancellationToken = default)
+    public IAsyncEnumerator<TEntity> GetAsyncEnumerator(CancellationToken cancellationToken = default)
     {
         return Query
             .AsAsyncEnumerable()
             .GetAsyncEnumerator();
     }
 
-    public IQueryable<TResult> CreateQuery()
+    public IQueryable<TEntity> CreateQuery()
     {
         return _appDatabaseContext
-            .Set<TEntity>()
-            .Cast<TResult>();
+            .Set<TScheme>()
+            .Cast<TEntity>();
     }
 }

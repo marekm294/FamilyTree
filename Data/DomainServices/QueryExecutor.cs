@@ -1,11 +1,13 @@
 ﻿using Domain.DataServicesAbstraction;
 using Microsoft.EntityFrameworkCore;
 
-namespace Data.Services;
+namespace Data.DomainServices;
 
 internal sealed class QueryExecutor : IQueryExecutor
 {
-    public Task<List<T>> ToListAsync<T>(IQueryable<T> query, CancellationToken cancellationToken = default)
+    public Task<List<TEntity>> ToListAsync<TEntity>(
+        IQueryable<TEntity> query,
+        CancellationToken cancellationToken = default)
     {
         return query
             .ToListAsync(cancellationToken);

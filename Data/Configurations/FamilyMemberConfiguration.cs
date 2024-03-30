@@ -1,13 +1,13 @@
 ﻿using Data.Configurations.Abstraction;
-using Data.Entities;
+using Data.Schemes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Data.Configurations;
 
-internal sealed class FamilyMemberConfiguration : DbEntityConfiguration<FamilyMemberEntity>
+internal sealed class FamilyMemberConfiguration : DbEntityConfiguration<FamilyMemberScheme>
 {
-    public override void Configure(EntityTypeBuilder<FamilyMemberEntity> builder)
+    public override void Configure(EntityTypeBuilder<FamilyMemberScheme> builder)
     {
         base
             .Configure(builder);

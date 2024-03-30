@@ -1,5 +1,6 @@
-﻿using Data.Entities;
+﻿using Data.DomainServices;
 using Data.Queries;
+using Data.Schemes;
 using Data.Services;
 using Data.Services.Abstraction;
 using Domain.DataServicesAbstraction;
@@ -20,7 +21,8 @@ public static class ServiceCollectionExtensions
             .AddDatabaseContext(configuration)
             .AddServices()
             .AddDomainServices()
-            .AddQueries();
+            .AddQueries()
+            .AddDbEntityFactories();
     }
 
     private static IServiceCollection AddDatabaseContext(
@@ -34,7 +36,8 @@ public static class ServiceCollectionExtensions
             options
                 .UseSqlServer(
                     connectionString,
-                    x => x.MigrationsHistoryTable("__MigrationsHistory")));
+                    x => x.MigrationsHistoryTable("__MigrationsHistory"))
+                .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
     }
 
     private static IServiceCollection AddServices(this IServiceCollection services)
@@ -46,12 +49,22 @@ public static class ServiceCollectionExtensions
     private static IServiceCollection AddDomainServices(this IServiceCollection services)
     {
         return services
-            .AddSingleton<IQueryExecutor, QueryExecutor>();
+            .AddSingleton<IQueryExecutor, QueryExecutor>()
+            .AddSingleton<IEntityProvider, EntityProvider>()
+            .AddScoped<IDbOperation, DbOperation>();
     }
 
     private static IServiceCollection AddQueries(this IServiceCollection services)
     {
+        // TODO: replace by reflection
         return services
-            .AddScoped<IQueryable<IFamilyMember>, DbContextQuery<FamilyMemberEntity, IFamilyMember>>();
+            .AddScoped<IQueryable<IFamilyMember>, DbContextQuery<FamilyMemberScheme, IFamilyMember>>();
+    }
+
+    private static IServiceCollection AddDbEntityFactories(this IServiceCollection services)
+    {
+        // TODO: replace by reflection
+        return services
+            .AddSingleton<IDbSchemeFactory<IFamilyMember>, DbSchemeFactory<FamilyMemberScheme, IFamilyMember>>();
     }
 }

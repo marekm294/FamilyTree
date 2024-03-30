@@ -1,4 +1,4 @@
-﻿using Data.Entities.Abstraction;
+﻿using Data.Schemes.Abstraction;
 using Data.ValueGenerators;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace Data.Configurations.Abstraction;
 
 internal abstract class DbEntityConfiguration<TEntity> : IEntityTypeConfiguration<TEntity>
-    where TEntity : DbEntity
+    where TEntity : DbScheme
 {
     public virtual void Configure(EntityTypeBuilder<TEntity> builder)
     {

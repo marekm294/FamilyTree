@@ -1,4 +1,4 @@
-﻿using Data.Entities.Abstraction;
+﻿using Data.Schemes.Abstraction;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -23,7 +23,7 @@ internal sealed class AppDatabaseContext : DbContext
     {
         foreach (var entry in ChangeTracker.Entries())
         {
-            if (entry.Entity is DbEntity dbEntity && entry.State == EntityState.Modified)
+            if (entry.Entity is DbScheme dbEntity && entry.State == EntityState.Modified)
             {
                 dbEntity.UpdatedAt = DateTime.UtcNow;
             }

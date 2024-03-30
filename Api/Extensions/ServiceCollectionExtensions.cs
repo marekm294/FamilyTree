@@ -1,6 +1,8 @@
 ﻿using Api.HostedServices;
+using Api.ModelBinderProviders;
 using Data.Extensions;
 using Domain.Extensions;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Api.Extensions;
 
@@ -11,6 +13,12 @@ public static class ServiceCollectionExtensions
         IConfiguration configuration)
     {
         services.AddControllers();
+
+        services
+        .AddMvc(options =>
+        {
+            options.ModelBinderProviders.Insert(0, new ModelBinderProvider());
+        });
 
         return services
             .AddSwagger()

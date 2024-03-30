@@ -1,11 +1,11 @@
 ﻿#pragma warning disable CS8618
 
-using Data.Entities.Abstraction;
+using Data.Schemes.Abstraction;
 using Domain.Entities;
 
-namespace Data.Entities;
+namespace Data.Schemes;
 
-internal sealed class FamilyMemberEntity : DbEntity, IFamilyMember
+internal sealed class FamilyMemberScheme : DbScheme, IFamilyMember
 {
     public string FirstName { get; set; }
 
