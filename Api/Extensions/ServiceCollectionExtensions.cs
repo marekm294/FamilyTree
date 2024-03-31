@@ -2,7 +2,8 @@
 using Api.ModelBinderProviders;
 using Data.Extensions;
 using Domain.Extensions;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc;
+using Shared.Extensions;
 
 namespace Api.Extensions;
 
@@ -19,6 +20,22 @@ public static class ServiceCollectionExtensions
         {
             options.ModelBinderProviders.Insert(0, new ModelBinderProvider());
         });
+
+        // Turn off default .Net Core validation.
+        services.Configure<ApiBehaviorOptions>(options =>
+        {
+            options.SuppressModelStateInvalidFilter = true;
+            options.InvalidModelStateResponseFactory = (context) =>
+            {
+                var error = context!.ModelState.FirstOrDefault().Value!.Errors.FirstOrDefault()!.ErrorMessage;
+                return new BadRequestObjectResult(error);
+            };
+        });
+
+        //services.AddFluentValidationAutoValidation(config =>
+        //{
+            //config.DisableDataAnnotationsValidation = true;
+        //});
 
         return services
             .AddSwagger()
@@ -46,6 +63,7 @@ public static class ServiceCollectionExtensions
     {
         return services
             .AddDataServices(configuration)
-            .AddDomainServices();
+            .AddDomainServices()
+            .AddSharedServices();
     }
 }

@@ -1,4 +1,4 @@
-﻿using Data.Schemes;
+﻿using IntegrationTests.TestsClasses.FamilyMembers.Data;
 using Shared.Helpers;
 using Shared.Models.Outputs;
 using System.Net;
@@ -14,13 +14,7 @@ public partial class FamilyMembersTests
         //Arrange
         var familyMembers = Enumerable
             .Range(0, 5)
-            .Select(n => new FamilyMemberScheme()
-            {
-                FirstName = $"FirstName{n}",
-                LastName = $"LastName{n}",
-                BirthDate = DateTime.Now,
-                DeathDate = DateTime.Now.AddDays(5),
-            })
+            .Select(FamilyMemberData.GetFamilyMemberScheme)
             .ToList();
 
         await _appDatabaseContext.AddRangeAsync(familyMembers);

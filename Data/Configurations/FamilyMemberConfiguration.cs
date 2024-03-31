@@ -2,6 +2,7 @@
 using Data.Schemes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Shared.Helpers.MaxLengthHelpers;
 
 namespace Data.Configurations;
 
@@ -15,12 +16,12 @@ internal sealed class FamilyMemberConfiguration : DbEntityConfiguration<FamilyMe
         builder
             .Property(f => f.FirstName)
             .IsRequired(true)
-            .HasMaxLength(32);
+            .HasMaxLength(FamilyMemberMaxLenghtHelpers.FIRST_NAME_MAX_LENGTH);
 
         builder
             .Property(f => f.LastName)
             .IsRequired(true)
-            .HasMaxLength(32);
+            .HasMaxLength(FamilyMemberMaxLenghtHelpers.LAST_NAME_MAX_LENGTH);
 
         builder
             .ToTable("FamilyMembers");

@@ -5,6 +5,8 @@ using Shared.Models.Outputs;
 using System.Net.Http.Json;
 using System.Net;
 using System.Text.Json;
+using IntegrationTests.TestsClasses.FamilyMembers.Data;
+using Shared.QueryArgs;
 
 namespace IntegrationTests.TestsClasses.FamilyMembers;
 
@@ -14,13 +16,7 @@ public partial class FamilyMembersTests
     public async Task Update_Family_Member_Success_Async()
     {
         //Arrange
-        var familyMemberScheme = new FamilyMemberScheme()
-        {
-            FirstName = $"FirstName",
-            LastName = $"LastName",
-            BirthDate = DateTime.Now,
-            DeathDate = DateTime.Now.AddDays(5),
-        };
+        var familyMemberScheme = FamilyMemberData.GetFamilyMemberScheme();
 
         await _appDatabaseContext.AddAsync(familyMemberScheme);
         await _appDatabaseContext.SaveChangesAsync();
@@ -52,5 +48,55 @@ public partial class FamilyMembersTests
         Assert.NotEqual(Guid.Empty, familyMembersOutput!.Id);
         Assert.Equal(updateFamilyMemberInput.FirstName, familyMembersOutput!.FirstName);
         Assert.Equal(updateFamilyMemberInput.LastName, familyMembersOutput!.LastName);
+    }
+
+    [Theory]
+    [InlineData(false, true, 0, HttpStatusCode.BadRequest)]
+    [InlineData(true, true, 4, HttpStatusCode.BadRequest)]
+        public async Task Update_Family_Member_Fail_Async(
+        bool shouldSendInput,
+        bool isErrorOutputExpected,
+        int errorCount,
+        HttpStatusCode expectedHttpStatusCode)
+    {
+        //Arrange
+        var familyMemberScheme = FamilyMemberData.GetFamilyMemberScheme();
+
+        await _appDatabaseContext.AddAsync(familyMemberScheme);
+        await _appDatabaseContext.SaveChangesAsync();
+
+        var updateFamilyMemberInput = new UpdateFamilyMemberInput()
+        {
+            Id = Guid.Empty,
+            Version = [],
+            FirstName = "",
+            LastName = "",
+            BirthDate = new DateTime(1997, 4, 29),
+            DeathDate = null,
+        };
+
+        if (shouldSendInput is false)
+        {
+            updateFamilyMemberInput = null;
+        }
+
+        //Act
+        var response = await _httpClient.PutAsJsonAsync(
+            FAMILY_MEMBERS_API,
+            updateFamilyMemberInput,
+            JsonSerializerHelper.CLIENT_JSON_SERIALIZER_OPTIONS);
+
+        //Assert
+        Assert.Equal(expectedHttpStatusCode, response.StatusCode);
+
+        if (isErrorOutputExpected)
+        {
+            using var content = await response.Content.ReadAsStreamAsync();
+            var errorOutput = JsonSerializer.Deserialize<ErrorOutput>(
+                content,
+                JsonSerializerHelper.CLIENT_JSON_SERIALIZER_OPTIONS);
+
+            Assert.Equal(errorCount, errorOutput?.ValidationErrors?.Count ?? 0);
+        }
     }
 }

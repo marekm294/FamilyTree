@@ -1,4 +1,6 @@
-﻿namespace Api.Extensions;
+﻿using Api.Middlewares;
+
+namespace Api.Extensions;
 
 public static class WebApplicationExtensions
 {
@@ -15,8 +17,15 @@ public static class WebApplicationExtensions
 
         webApplication.UseAuthorization();
 
-
         webApplication.MapControllers();
+
+        return webApplication;
+    }
+
+    public static WebApplication UseMiddlewares(this WebApplication webApplication)
+    {
+        webApplication
+            .UseMiddleware<ErrorHandlingMiddlware>();
 
         return webApplication;
     }

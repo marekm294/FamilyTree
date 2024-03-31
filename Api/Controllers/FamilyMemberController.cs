@@ -1,4 +1,5 @@
 ﻿using Api.Controllers.Abstraction;
+using Api.FilterAttributes;
 using Domain.DataServices.Abstraction;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Models.Inputs.FamilyMembers;
@@ -22,8 +23,11 @@ public class FamilyMemberController : BaseController
     }
 
     [HttpPost]
+    
+    [RequiredFilter("createFamilyMemberInput")]
+    [ValidationFilter<CreateFamilyMemberInput>()]
     public async Task<ActionResult<FamilyMemberOutput>> CreateFamilyMemberAsync(
-        [FromBody][Required] CreateFamilyMemberInput createFamilyMemberInput,
+        [FromBody] CreateFamilyMemberInput createFamilyMemberInput,
         [FromServices] IFamilyMemberService familyMemberService)
     {
         var familyMemberOutput = await familyMemberService.CreateFamilyMemberAsync(createFamilyMemberInput);
@@ -31,8 +35,10 @@ public class FamilyMemberController : BaseController
     }
 
     [HttpPut]
+    [RequiredFilter("updateFamilyMemberInput")]
+    [ValidationFilter<UpdateFamilyMemberInput>()]
     public async Task<ActionResult<FamilyMemberOutput>> UpdateFamilyMemberAsync(
-        [FromBody][Required] UpdateFamilyMemberInput updateFamilyMemberInput,
+        [FromBody] UpdateFamilyMemberInput updateFamilyMemberInput,
         [FromServices] IFamilyMemberService familyMemberService)
     {
         var familyMemberOutput = await familyMemberService
@@ -41,11 +47,13 @@ public class FamilyMemberController : BaseController
     }
 
     [HttpDelete]
+    [RequiredFilter("deleteQueryArgs")]
+    [ValidationFilter<DeleteQueryArgs>()]
     public async Task<ActionResult<FamilyMemberOutput>> DeleteFamilyMemberAsync(
-        [FromQuery][Required] DeleteQueryArgs deleteQueryArgs,
+        [FromQuery] DeleteQueryArgs deleteQueryArgs,
         [FromServices] IFamilyMemberService familyMemberService)
     {
-        var isDeleted = await familyMemberService
+        await familyMemberService
             .DeleteFamilyMemberAsync(deleteQueryArgs);
         return NoContent();
     }
