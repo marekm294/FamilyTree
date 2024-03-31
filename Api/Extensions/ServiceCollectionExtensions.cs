@@ -39,7 +39,7 @@ public static class ServiceCollectionExtensions
 
         return services
             .AddSwagger()
-            .AddHostedServices()
+            .AddHostedServices(configuration)
             .AddServices(configuration);
     }
 
@@ -50,11 +50,19 @@ public static class ServiceCollectionExtensions
             .AddSwaggerGen();
     }
 
-    private static IServiceCollection AddHostedServices(this IServiceCollection services)
+    private static IServiceCollection AddHostedServices(
+        this IServiceCollection services,
+        IConfiguration configuration)
     {
-        return services
-            .AddHostedService<DomainConfigurationHostedService>()
+        var sShouldMigrateDatabase = configuration.GetValue<bool>("ShouldMigrateDatabase");
+        if (sShouldMigrateDatabase)
+        {
+            services
             .AddHostedService<DbMigrationHostedService>();
+        }
+
+        return services
+            .AddHostedService<DomainConfigurationHostedService>();
     }
 
     private static IServiceCollection AddServices(

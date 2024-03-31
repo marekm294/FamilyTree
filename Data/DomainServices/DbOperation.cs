@@ -1,5 +1,8 @@
-﻿using Domain.DataServicesAbstraction;
+﻿using Data.Exceptions;
+using Domain.DataServicesAbstraction;
 using Domain.Entities.Abstraction;
+using Microsoft.EntityFrameworkCore;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Data.DomainServices;
 
@@ -33,8 +36,19 @@ internal sealed class DbOperation : IDbOperation
         _appDatabaseContext.Remove(entity);
     }
 
-    public Task SaveChangesAsync(CancellationToken cancellationToken = default)
+    public async Task SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        return _appDatabaseContext.SaveChangesAsync(cancellationToken);
+        try
+        {
+            await _appDatabaseContext.SaveChangesAsync(cancellationToken);
+        }
+        catch (DbUpdateConcurrencyException e)
+        {
+            throw new EntityToUpdateNotFoundException(e);
+        }
+        catch (DbUpdateException e)
+        {
+            throw new EntityUpdateException(e);
+        }
     }
 }

@@ -51,10 +51,15 @@ public partial class FamilyMembersTests
     }
 
     [Theory]
-    [InlineData(false, true, 0, HttpStatusCode.BadRequest)]
-    [InlineData(true, true, 4, HttpStatusCode.BadRequest)]
-        public async Task Update_Family_Member_Fail_Async(
+    [InlineData(true, true, false, true, true, 0, HttpStatusCode.BadRequest)]
+    [InlineData(true, true, true, false, true, 2, HttpStatusCode.BadRequest)]
+    [InlineData(true, false, true, true, true, 0, HttpStatusCode.NotFound)]
+    [InlineData(false, true, true, true, true, 0, HttpStatusCode.NotFound)]
+    public async Task Update_Family_Member_Fail_Async(
+        bool shouldSendValidId,
+        bool shouldSendValidVersion,
         bool shouldSendInput,
+        bool shouldSendValidInput,
         bool isErrorOutputExpected,
         int errorCount,
         HttpStatusCode expectedHttpStatusCode)
@@ -67,10 +72,10 @@ public partial class FamilyMembersTests
 
         var updateFamilyMemberInput = new UpdateFamilyMemberInput()
         {
-            Id = Guid.Empty,
-            Version = [],
-            FirstName = "",
-            LastName = "",
+            Id = shouldSendValidId ? familyMemberScheme.Id : Guid.NewGuid(),
+            Version = shouldSendValidVersion ? familyMemberScheme.Version : [0, 1, 2, 3, 4, 5, 6, 7],
+            FirstName = shouldSendValidInput ? "Name" : "",
+            LastName = shouldSendValidInput ? "Name2" : "",
             BirthDate = new DateTime(1997, 4, 29),
             DeathDate = null,
         };
