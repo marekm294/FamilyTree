@@ -12,7 +12,8 @@ public class BaseFactoryCollectionTestClass : IAsyncLifetime
     protected readonly ITestOutputHelper _testOutputHelper;
     protected readonly TestWebApplicationFactory _testWebApplicationFactory;
     protected readonly HttpClient _httpClient;
-    internal readonly AppDatabaseContext _appDatabaseContext;
+    internal IServiceScope _serviceScope = null!;
+    internal AppDatabaseContext _appDatabaseContext = null!;
 
     public BaseFactoryCollectionTestClass(
         DatabaseFixture fixture,
@@ -22,16 +23,27 @@ public class BaseFactoryCollectionTestClass : IAsyncLifetime
         _testOutputHelper = testOutputHelper ?? throw new ArgumentNullException(nameof(testOutputHelper));
         _testWebApplicationFactory = fixture.Factory;
         _httpClient = _testWebApplicationFactory.CreateClient();
-        _appDatabaseContext = _testWebApplicationFactory.Services.GetRequiredService<AppDatabaseContext>();
     }
 
     public async Task DisposeAsync()
     {
-        await _appDatabaseContext.Database.EnsureDeletedAsync();
+        await ClearDatabaseAsync();
     }
 
-    public async Task InitializeAsync()
+    public Task InitializeAsync()
     {
-        await _appDatabaseContext.Database.EnsureCreatedAsync();
+        _serviceScope = _testWebApplicationFactory.Services.CreateScope();
+        _appDatabaseContext = _serviceScope.ServiceProvider.GetRequiredService<AppDatabaseContext>();
+        return Task.CompletedTask;
+    }
+
+    private async Task ClearDatabaseAsync()
+    {
+        _serviceScope.Dispose();
+        
+        var serviceScope = _testWebApplicationFactory.Services.CreateScope();
+        var appDatabaseContext = serviceScope.ServiceProvider.GetRequiredService<AppDatabaseContext>();
+        appDatabaseContext.RemoveRange(appDatabaseContext.FamilyMembers);
+        await appDatabaseContext.SaveChangesAsync();
     }
 }

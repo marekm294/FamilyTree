@@ -1,15 +1,18 @@
-﻿using Data.Schemes.Abstraction;
+﻿using Data.Schemes;
+using Data.Schemes.Abstraction;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
 namespace Data;
 
-internal sealed class AppDatabaseContext : DbContext
+internal class AppDatabaseContext : DbContext
 {
     public AppDatabaseContext(DbContextOptions<AppDatabaseContext> options)
         : base(options)
     {
     }
+
+    public virtual DbSet<FamilyMemberScheme> FamilyMembers { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

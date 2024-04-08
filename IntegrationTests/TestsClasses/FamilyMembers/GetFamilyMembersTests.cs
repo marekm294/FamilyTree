@@ -30,6 +30,6 @@ public partial class FamilyMembersTests
 
         //Assert
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        Assert.Equal(familyMembersOutputs!.Count, familyMembers.Count);
+        Assert.Equal(familyMembers.Count, familyMembersOutputs!.Count);
     }
 }

@@ -7,6 +7,7 @@ using System.Net;
 using System.Text.Json;
 using IntegrationTests.TestsClasses.FamilyMembers.Data;
 using Shared.QueryArgs;
+using Microsoft.EntityFrameworkCore;
 
 namespace IntegrationTests.TestsClasses.FamilyMembers;
 
@@ -66,6 +67,8 @@ public partial class FamilyMembersTests
     {
         //Arrange
         var familyMemberScheme = FamilyMemberData.GetFamilyMemberScheme();
+
+        var x = await _appDatabaseContext.FamilyMembers.ToListAsync();
 
         await _appDatabaseContext.AddAsync(familyMemberScheme);
         await _appDatabaseContext.SaveChangesAsync();

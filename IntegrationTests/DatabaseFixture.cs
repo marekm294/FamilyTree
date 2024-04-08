@@ -1,4 +1,6 @@
-﻿using IntegrationTests.Helpers;
+﻿using Data;
+using IntegrationTests.Helpers;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace IntegrationTests;
 
@@ -7,6 +9,11 @@ public class DatabaseFixture : IDisposable
     public DatabaseFixture()
     {
         Factory = new TestWebApplicationFactory();
+        var appDatabaseContext = Factory.Services.GetRequiredService<AppDatabaseContext>();
+
+        var databaseFacade = appDatabaseContext.Database;
+        databaseFacade.EnsureDeleted();
+        databaseFacade.EnsureCreated();
     }
 
     public TestWebApplicationFactory Factory { get; }
