@@ -11,9 +11,9 @@ internal sealed class FamilyMemberScheme : DbScheme, IFamilyMember
 
     public string LastName { get; set; }
 
+    public string[] MiddleNames { get; set; } = [];
+
     public DateTime? BirthDate { get; set; }
 
     public DateTime? DeathDate { get; set; }
-
-    // TODO: add other names as json column string[]
 }

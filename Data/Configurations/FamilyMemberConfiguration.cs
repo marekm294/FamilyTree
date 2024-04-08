@@ -24,6 +24,9 @@ internal sealed class FamilyMemberConfiguration : DbEntityConfiguration<FamilyMe
             .HasMaxLength(FamilyMemberMaxLenghtHelpers.LAST_NAME_MAX_LENGTH);
 
         builder
+            .PrimitiveCollection(f => f.MiddleNames);
+
+        builder
             .ToTable("FamilyMembers");
     }
 }

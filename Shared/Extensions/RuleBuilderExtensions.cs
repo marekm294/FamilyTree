@@ -14,6 +14,15 @@ internal static class RuleBuilderExtensions
             .WithMessage($"{propertyName} is required");
     }
 
+    public static IRuleBuilderOptions<T, TProperty> NotNull<T, TProperty>(
+        this IRuleBuilder<T, TProperty> ruleBuilder,
+        string propertyName)
+    {
+        return ruleBuilder
+            .NotNull()
+            .WithMessage($"{propertyName} is required");
+    }
+
     public static IRuleBuilderOptions<T, string> MaximumLength<T>(
         this IRuleBuilder<T, string> ruleBuilder,
         int maximumLength,

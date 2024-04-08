@@ -1,12 +1,10 @@
-﻿using Data.Schemes;
-using Shared.Helpers;
+﻿using Shared.Helpers;
 using Shared.Models.Inputs.FamilyMembers;
 using Shared.Models.Outputs;
 using System.Net.Http.Json;
 using System.Net;
 using System.Text.Json;
 using IntegrationTests.TestsClasses.FamilyMembers.Data;
-using Shared.QueryArgs;
 using Microsoft.EntityFrameworkCore;
 
 namespace IntegrationTests.TestsClasses.FamilyMembers;
@@ -18,6 +16,7 @@ public partial class FamilyMembersTests
     {
         //Arrange
         var familyMemberScheme = FamilyMemberData.GetFamilyMemberScheme();
+        familyMemberScheme.MiddleNames = ["Marek", "Honza"];
 
         await _appDatabaseContext.AddAsync(familyMemberScheme);
         await _appDatabaseContext.SaveChangesAsync();
@@ -28,6 +27,7 @@ public partial class FamilyMembersTests
             Version = familyMemberScheme.Version,
             FirstName = "Marek",
             LastName = "Mička",
+            MiddleNames = ["Marek", "Honza", "Pavel"],
             BirthDate = new DateTime(1997, 4, 29),
             DeathDate = null
         };
@@ -49,6 +49,7 @@ public partial class FamilyMembersTests
         Assert.NotEqual(Guid.Empty, familyMembersOutput!.Id);
         Assert.Equal(updateFamilyMemberInput.FirstName, familyMembersOutput!.FirstName);
         Assert.Equal(updateFamilyMemberInput.LastName, familyMembersOutput!.LastName);
+        Assert.Equal(updateFamilyMemberInput.MiddleNames.Length, familyMembersOutput!.MiddleNames.Length);
     }
 
     [Theory]

@@ -17,6 +17,7 @@ public partial class FamilyMembersTests
         {
             FirstName = "Marek",
             LastName = "Mička",
+            MiddleNames = [ "Jan", "Pavel" ],
             BirthDate = new DateTime(1997, 4, 29),
             DeathDate = null,
         };
@@ -37,6 +38,7 @@ public partial class FamilyMembersTests
         Assert.Equal(HttpStatusCode.Created, response.StatusCode);
         Assert.NotEqual(Guid.Empty, familyMembersOutput!.Id);
         Assert.Equal(createFamilyMemberInput.FirstName, familyMembersOutput!.FirstName);
+        Assert.Equal(createFamilyMemberInput.MiddleNames.Length, familyMembersOutput!.MiddleNames.Length);
     }
 
     [Theory]
