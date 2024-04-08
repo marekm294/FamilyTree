@@ -35,7 +35,7 @@ internal sealed class FamilyMemberService : IFamilyMemberService
         CreateFamilyMemberInput createFamilyMemberInput,
         CancellationToken cancellationToken = default)
     {
-        var familyMemberEntity = _entityProvider.GetCreateEntity<IFamilyMember>();
+        var familyMemberEntity = _entityProvider.GetNewEntity<IFamilyMember>();
         familyMemberEntity.InitializeFamilyMember(createFamilyMemberInput);
         await _dbOperation.AddAsync(familyMemberEntity, cancellationToken);
         await _dbOperation.SaveChangesAsync(cancellationToken);
@@ -47,7 +47,7 @@ internal sealed class FamilyMemberService : IFamilyMemberService
         UpdateFamilyMemberInput updateFamilyMemberInput,
         CancellationToken cancellationToken = default)
     {
-        var familyMemberEntity = _entityProvider.GetUpdateEntity<IFamilyMember>(
+        var familyMemberEntity = _entityProvider.GetExistingEntity<IFamilyMember>(
             updateFamilyMemberInput.Id,
             updateFamilyMemberInput.Version);
 
@@ -62,7 +62,7 @@ internal sealed class FamilyMemberService : IFamilyMemberService
         DeleteQueryArgs deleteQueryArgs,
         CancellationToken cancellationToken = default)
     {
-        var familyMemberEntity = _entityProvider.GetUpdateEntity<IFamilyMember>(
+        var familyMemberEntity = _entityProvider.GetExistingEntity<IFamilyMember>(
             deleteQueryArgs.Id,
             deleteQueryArgs.Version);
 

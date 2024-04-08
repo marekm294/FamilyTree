@@ -4,9 +4,9 @@ namespace Domain.DataServicesAbstraction;
 
 public interface IEntityProvider
 {
-    TEntity GetCreateEntity<TEntity>()
+    TEntity GetNewEntity<TEntity>()
         where TEntity : IEntity;
 
-    TEntity GetUpdateEntity<TEntity>(Guid id, byte[] version)
+    TEntity GetExistingEntity<TEntity>(Guid id, byte[] version)
         where TEntity : IEntity;
 }

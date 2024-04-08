@@ -14,14 +14,14 @@ internal sealed class EntityProvider : IEntityProvider
         _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
     }
 
-    public TEntity GetCreateEntity<TEntity>()
+    public TEntity GetNewEntity<TEntity>()
         where TEntity : IEntity
     {
         var dbSchemeFactory = _serviceProvider.GetRequiredService<IDbSchemeFactory<TEntity>>();
         return dbSchemeFactory.GetCreateEntity();
     }
 
-    public TEntity GetUpdateEntity<TEntity>(Guid id, byte[] version)
+    public TEntity GetExistingEntity<TEntity>(Guid id, byte[] version)
         where TEntity : IEntity
     {
         var dbSchemeFactory = _serviceProvider.GetRequiredService<IDbSchemeFactory<TEntity>>();
