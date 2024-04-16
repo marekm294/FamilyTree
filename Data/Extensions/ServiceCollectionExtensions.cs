@@ -1,10 +1,10 @@
 ﻿using Data.DomainServices;
 using Data.Queries;
-using Data.Schemes;
+using Data.Schemes.Abstraction;
 using Data.Services;
 using Data.Services.Abstraction;
 using Domain.DataServicesAbstraction;
-using Domain.Entities;
+using Domain.Entities.Abstraction;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -56,17 +56,55 @@ public static class ServiceCollectionExtensions
 
     private static IServiceCollection AddQueries(this IServiceCollection services)
     {
-        // TODO: replace by reflection
-        return services
-            .AddScoped<IQueryable<IFamilyMember>, DbContextQuery<FamilyMemberScheme, IFamilyMember>>()
-            .AddScoped<IQueryable<IFamily>, DbContextQuery<FamilyScheme, IFamily>>();
+        var entityTypes = GetIEntityTypes();
+        
+        foreach (var entityType in entityTypes)
+        {
+            var schemeType = GetSchemaForEntity(entityType);
+
+            services.AddScoped(
+                typeof(IQueryable<>).MakeGenericType(entityType),
+                typeof(DbContextQuery<,>).MakeGenericType(schemeType, entityType));
+        }
+
+        return services;
     }
 
     private static IServiceCollection AddDbEntityFactories(this IServiceCollection services)
     {
-        // TODO: replace by reflection
-        return services
-            .AddSingleton<IDbSchemeFactory<IFamilyMember>, DbSchemeFactory<FamilyMemberScheme, IFamilyMember>>()
-            .AddSingleton<IDbSchemeFactory<IFamily>, DbSchemeFactory<FamilyScheme, IFamily>>();
+        var entityTypes = GetIEntityTypes();
+
+        foreach (var entityType in entityTypes)
+        {
+            var schemeType = GetSchemaForEntity(entityType);
+
+            services.AddSingleton(
+                typeof(IDbSchemeFactory<>).MakeGenericType(entityType),
+                typeof(DbSchemeFactory<,>).MakeGenericType(schemeType, entityType));
+        }
+
+        return services;
+    }
+
+    private static List<Type> GetIEntityTypes()
+    {
+        var iEntityType = typeof(IEntity);
+
+        return iEntityType
+            .Assembly
+            .GetTypes()
+            .Where(t => t.IsInterface)
+            .Where(t => t.IsAssignableTo(iEntityType))
+            .Where(t => t != iEntityType)
+            .ToList();
+    }
+
+    private static Type GetSchemaForEntity(Type entityType)
+    {
+        return typeof(DbScheme)
+            .Assembly
+            .GetTypes()
+            .Where(t => t.IsClass)
+            .First(t => t.IsAssignableTo(entityType));
     }
 }

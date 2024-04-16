@@ -3,7 +3,7 @@ using Shared.Models.Outputs;
 
 namespace Domain.DataServices.Abstraction;
 
-public interface IFamilyService
+public interface IFamilyService : IDataService
 {
     Task<FamilyOutput> CreateFamilyAsync(
         CreateFamilyInput createFamilyInput,

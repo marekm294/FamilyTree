@@ -4,7 +4,7 @@ using Shared.QueryArgs;
 
 namespace Domain.DataServices.Abstraction;
 
-public interface IFamilyMemberService
+public interface IFamilyMemberService : IDataService
 {
     Task<List<FamilyMemberOutput>> GetAllFamilyMemberOutputsAsync(
         CancellationToken cancellationToken = default);
