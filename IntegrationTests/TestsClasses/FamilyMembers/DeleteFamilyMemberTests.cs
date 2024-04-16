@@ -4,6 +4,7 @@ using IntegrationTests.TestsClasses.FamilyMembers.Data;
 using Shared.Helpers;
 using Shared.Models.Outputs;
 using System.Text.Json;
+using IntegrationTests.TestsClasses.Families.Data;
 
 namespace IntegrationTests.TestsClasses.FamilyMembers;
 
@@ -13,9 +14,13 @@ public partial class FamilyMembersTests
     public async Task Delete_Family_Member_Success_Async()
     {
         //Arrange
-        var familyMemberScheme = FamilyMemberData.GetFamilyMemberScheme();
+        var familyScheme = FamilyData.GetFamilyScheme();
+        await _appDatabaseContext.AddAsync(familyScheme);
 
+        var familyMemberScheme = FamilyMemberData.GetFamilyMemberScheme();
+        familyMemberScheme.FamilyId = familyScheme.Id;
         await _appDatabaseContext.AddAsync(familyMemberScheme);
+
         await _appDatabaseContext.SaveChangesAsync();
 
         var deleteQueryArgs = new DeleteQueryArgs(familyMemberScheme.Id, familyMemberScheme.Version);
@@ -38,10 +43,12 @@ public partial class FamilyMembersTests
         HttpStatusCode expectedHttpStatusCode)
     {
         //Arrange
-        var familyMemberScheme = FamilyMemberData.GetFamilyMemberScheme();
+        var familyScheme = FamilyData.GetFamilyScheme();
+        await _appDatabaseContext.AddAsync(familyScheme);
 
+        var familyMemberScheme = FamilyMemberData.GetFamilyMemberScheme();
+        familyMemberScheme.FamilyId = familyScheme.Id;
         await _appDatabaseContext.AddAsync(familyMemberScheme);
-        await _appDatabaseContext.SaveChangesAsync();
 
         var deleteQueryArgs = new DeleteQueryArgs(
             familyMemberScheme.Id, []);

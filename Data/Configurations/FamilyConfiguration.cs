@@ -1,0 +1,26 @@
+﻿using Data.Configurations.Abstraction;
+using Data.Schemes;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Shared.Helpers.MaxLengthHelpers;
+
+namespace Data.Configurations;
+
+internal sealed class FamilyConfiguration : DbEntityConfiguration<FamilyScheme>
+{
+    public override void Configure(EntityTypeBuilder<FamilyScheme> builder)
+    {
+        base
+            .Configure(builder);
+
+        builder
+            .Property(f => f.FamilyName)
+            .IsRequired(true)
+            .HasMaxLength(FamilyMaxLengthHelper.FAMILY_NAME_MAX_LENGTH);
+
+        builder
+            .HasMany<FamilyMemberScheme>()
+            .WithOne()
+            .HasForeignKey(fm => fm.FamilyId)
+            .HasPrincipalKey(f => f.Id);
+    }
+}

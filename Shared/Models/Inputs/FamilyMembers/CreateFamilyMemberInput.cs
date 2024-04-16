@@ -2,6 +2,7 @@
 
 public sealed class CreateFamilyMemberInput
 {
+    public Guid FamilyId { get; set; }
     public string FirstName { get; set; } = "";
     public string LastName { get; set; } = "";
     public string[] MiddleNames { get; set; } = [];

@@ -5,14 +5,13 @@ using Microsoft.AspNetCore.Mvc;
 using Shared.Models.Inputs.FamilyMembers;
 using Shared.Models.Outputs;
 using Shared.QueryArgs;
-using System.ComponentModel.DataAnnotations;
 
 namespace Api.Controllers;
 
 public class FamilyMemberController : BaseController
 {
-    [HttpGet]
     // ToDelete
+    [HttpGet]
     public async Task<ActionResult<IEnumerable<FamilyMemberOutput>>> GetFamilyMembersAsync(
         [FromServices] IFamilyMemberService familyMemberService)
     {
@@ -23,7 +22,6 @@ public class FamilyMemberController : BaseController
     }
 
     [HttpPost]
-    
     [RequiredFilter("createFamilyMemberInput")]
     [ValidationFilter<CreateFamilyMemberInput>()]
     public async Task<ActionResult<FamilyMemberOutput>> CreateFamilyMemberAsync(

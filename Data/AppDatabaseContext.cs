@@ -13,6 +13,7 @@ internal class AppDatabaseContext : DbContext
     }
 
     public virtual DbSet<FamilyMemberScheme> FamilyMembers { get; set; }
+    public virtual DbSet<FamilyScheme> Families { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -58,13 +58,15 @@ public static class ServiceCollectionExtensions
     {
         // TODO: replace by reflection
         return services
-            .AddScoped<IQueryable<IFamilyMember>, DbContextQuery<FamilyMemberScheme, IFamilyMember>>();
+            .AddScoped<IQueryable<IFamilyMember>, DbContextQuery<FamilyMemberScheme, IFamilyMember>>()
+            .AddScoped<IQueryable<IFamily>, DbContextQuery<FamilyScheme, IFamily>>();
     }
 
     private static IServiceCollection AddDbEntityFactories(this IServiceCollection services)
     {
         // TODO: replace by reflection
         return services
-            .AddSingleton<IDbSchemeFactory<IFamilyMember>, DbSchemeFactory<FamilyMemberScheme, IFamilyMember>>();
+            .AddSingleton<IDbSchemeFactory<IFamilyMember>, DbSchemeFactory<FamilyMemberScheme, IFamilyMember>>()
+            .AddSingleton<IDbSchemeFactory<IFamily>, DbSchemeFactory<FamilyScheme, IFamily>>();
     }
 }

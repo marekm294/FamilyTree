@@ -1,4 +1,5 @@
-﻿using IntegrationTests.TestsClasses.FamilyMembers.Data;
+﻿using IntegrationTests.TestsClasses.Families.Data;
+using IntegrationTests.TestsClasses.FamilyMembers.Data;
 using Shared.Helpers;
 using Shared.Models.Outputs;
 using System.Net;
@@ -12,10 +13,22 @@ public partial class FamilyMembersTests
     public async Task Get_All_Family_Members_Success_Async()
     {
         //Arrange
-        var familyMembers = Enumerable
+        var families = Enumerable
             .Range(0, 5)
+            .Select(FamilyData.GetFamilyScheme)
+            .ToList();
+        await _appDatabaseContext.AddRangeAsync(families);
+
+
+        var familyMembers = Enumerable
+            .Range(0, families.Count)
             .Select(FamilyMemberData.GetFamilyMemberScheme)
             .ToList();
+        
+        for(var i = 0; i < families.Count; i++)
+        {
+            familyMembers[i].FamilyId = families[i].Id;
+        }
 
         await _appDatabaseContext.AddRangeAsync(familyMembers);
         await _appDatabaseContext.SaveChangesAsync();

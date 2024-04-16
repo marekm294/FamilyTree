@@ -5,8 +5,10 @@ using Domain.Entities;
 
 namespace Data.Schemes;
 
-internal sealed class FamilyMemberScheme : DbScheme, IFamilyMember
+internal class FamilyMemberScheme : DbScheme, IFamilyMember
 {
+    public Guid FamilyId { get; set; }
+
     public string FirstName { get; set; }
 
     public string LastName { get; set; }

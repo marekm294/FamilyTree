@@ -5,6 +5,8 @@ namespace Domain.Entities;
 
 public interface IFamilyMember : IEntity
 {
+    Guid FamilyId {  get; set; }
+
     string FirstName { get; set; }
 
     string LastName { get; set; }
@@ -17,6 +19,7 @@ public interface IFamilyMember : IEntity
 
     public void InitializeFamilyMember(CreateFamilyMemberInput createFamilyMemberInput)
     {
+        FamilyId = createFamilyMemberInput.FamilyId;
         FirstName = createFamilyMemberInput.FirstName;
         LastName = createFamilyMemberInput.LastName;
         MiddleNames = createFamilyMemberInput.MiddleNames;

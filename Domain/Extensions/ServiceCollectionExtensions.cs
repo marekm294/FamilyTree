@@ -18,7 +18,8 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddDataServices(this IServiceCollection services)
     {
         return services
-            .AddScoped<IFamilyMemberService, FamilyMemberService>();
+            .AddScoped<IFamilyMemberService, FamilyMemberService>()
+            .AddScoped<IFamilyService, FamilyService>();
     }
 
     private static IServiceCollection AddServices(this IServiceCollection services)

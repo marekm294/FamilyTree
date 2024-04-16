@@ -9,6 +9,9 @@ internal sealed class CreateFamilyMemberInputValidator : AbstractValidator<Creat
 {
     public CreateFamilyMemberInputValidator()
     {
+        RuleFor(fm => fm.FamilyId)
+            .NotEmpty("Family id");
+
         RuleFor(fm => fm.FirstName)
             .NotEmpty("First Name")
             .MaximumLength(FamilyMemberMaxLenghtHelpers.FIRST_NAME_MAX_LENGTH, "First Name");
