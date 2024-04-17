@@ -23,4 +23,18 @@ public class FamilyController : BaseController
         return Created("", familyOutput);
     }
 
+    [HttpPut]
+    [RequiredFilter("updateFamilyInput")]
+    [ValidationFilter<UpdateFamilyInput>()]
+    [ProducesResponseType<Guid>(StatusCodes.Status201Created)]
+    [ProducesResponseType<ErrorOutput>(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType<ErrorOutput>(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult<FamilyOutput>> UpdateFamilyOutputAsync(
+        [FromBody] UpdateFamilyInput updateFamilyInput,
+        [FromServices] IFamilyService familyService)
+    {
+        var familyOutput = await familyService.UpdateFamilyAsync(updateFamilyInput);
+        return Ok(familyOutput);
+    }
 }

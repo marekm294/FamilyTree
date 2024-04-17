@@ -41,4 +41,45 @@ public partial class FamiliesTests
         var context = assertScope.ServiceProvider.GetRequiredService<AppDatabaseContext>();
         Assert.True(await context.Families.AnyAsync(fm => fm.Id == familyOutput.Id));
     }
+
+    [Theory]
+    [InlineData(false, true, 0, HttpStatusCode.BadRequest)]
+    [InlineData(true, true, 1, HttpStatusCode.BadRequest)]
+    public async Task Create_Family_Fail_Async(
+        bool shouldSendInput,
+        bool isErrorOutputExpected,
+        int errorCount,
+        HttpStatusCode expectedHttpStatusCode)
+    {
+        //Arrange
+        var createFamilyInput = new CreateFamilyInput()
+        {
+            FamilyName = isErrorOutputExpected ? "" : "NewFamilyName",
+        };
+
+        if (shouldSendInput is false)
+        {
+            createFamilyInput = null;
+        }
+
+        //Act
+        var response = await _httpClient.PostAsJsonAsync(
+            FAMILIES_API,
+            createFamilyInput,
+            JsonSerializerHelper.CLIENT_JSON_SERIALIZER_OPTIONS);
+
+        //Assert
+        Assert.Equal(expectedHttpStatusCode, response.StatusCode);
+
+        if (isErrorOutputExpected)
+        {
+            using var content = await response.Content.ReadAsStreamAsync();
+            var errorOutput = JsonSerializer.Deserialize<ErrorOutput>(
+                content,
+                JsonSerializerHelper.CLIENT_JSON_SERIALIZER_OPTIONS);
+
+            Assert.Equal(errorCount, errorOutput?.ValidationErrors?.Count ?? 0);
+        }
+    }
+
 }

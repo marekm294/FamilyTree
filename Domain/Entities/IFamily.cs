@@ -11,4 +11,9 @@ public interface IFamily : IEntity
     {
         FamilyName = createFamilyInput.FamilyName;
     }
+
+    public void UpdateFamily(UpdateFamilyInput updateFamilyInput)
+    {
+        FamilyName = updateFamilyInput.FamilyName;
+    }
 }

@@ -65,6 +65,7 @@ public partial class FamilyMembersTests
         int errorCount,
         HttpStatusCode expectedHttpStatusCode)
     {
+        //Arrange
         var familyId = Guid.NewGuid();
         if (isFamilyInDb)
         {
@@ -73,7 +74,6 @@ public partial class FamilyMembersTests
             await _appDatabaseContext.SaveChangesAsync();
         }
 
-        //Arrange
         var createFamilyMemberInput = new CreateFamilyMemberInput()
         {
             FirstName = "",

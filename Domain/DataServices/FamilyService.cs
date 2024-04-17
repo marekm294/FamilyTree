@@ -31,4 +31,17 @@ internal sealed class FamilyService : IFamilyService
 
         return familyEntity.ToFamilyOutput();
     }
+
+    public async Task<FamilyOutput> UpdateFamilyAsync(
+        UpdateFamilyInput updateFamilyInput,
+        CancellationToken cancellationToken = default)
+    {
+        var familyEntity = _entityProvider.GetExistingEntity<IFamily, UpdateFamilyInput>(updateFamilyInput);
+
+        _dbOperation.AllowUpdate(familyEntity);
+        familyEntity.UpdateFamily(updateFamilyInput);
+        await _dbOperation.SaveChangesAsync(cancellationToken);
+
+        return familyEntity.ToFamilyOutput();
+    }
 }

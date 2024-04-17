@@ -24,6 +24,7 @@ public static class ServiceCollectionExtensions
             .AddScoped<IValidator<UpdateFamilyMemberInput>, UpdateFamilyMemberInputValidator>()
             
             .AddScoped<IValidator<CreateFamilyInput>, CreateFamilyInputValidator>()
+            .AddScoped<IValidator<UpdateFamilyInput>, UpdateFamilyInputValidator>()
 
             .AddScoped<IValidator<DeleteQueryArgs>, DeleteQueryArgsValidator>();
     }

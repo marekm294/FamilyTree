@@ -8,4 +8,8 @@ public interface IFamilyService : IDataService
     Task<FamilyOutput> CreateFamilyAsync(
         CreateFamilyInput createFamilyInput,
         CancellationToken cancellationToken = default);
+
+    Task<FamilyOutput> UpdateFamilyAsync(
+        UpdateFamilyInput updateFamilyInput,
+        CancellationToken cancellationToken = default);
 }

@@ -47,9 +47,7 @@ internal sealed class FamilyMemberService : IFamilyMemberService
         UpdateFamilyMemberInput updateFamilyMemberInput,
         CancellationToken cancellationToken = default)
     {
-        var familyMemberEntity = _entityProvider.GetExistingEntity<IFamilyMember>(
-            updateFamilyMemberInput.Id,
-            updateFamilyMemberInput.Version);
+        var familyMemberEntity = _entityProvider.GetExistingEntity<IFamilyMember, UpdateFamilyMemberInput>(updateFamilyMemberInput);
 
         _dbOperation.AllowUpdate(familyMemberEntity);
         familyMemberEntity.UpdateFamilyMember(updateFamilyMemberInput);
