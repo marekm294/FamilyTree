@@ -63,4 +63,14 @@ internal sealed class FamilyMemberService : IFamilyMemberService
 
         return true;
     }
+
+    public Task<List<FamilyMemberOutput>> GetFamilyMembersAsync(
+        Guid familyId,
+        CancellationToken cancellationToken = default)
+    {
+        return _familyMembers
+            .Where(fm => fm.FamilyId == familyId)
+            .Select(fm => fm.ToFamilyMemberOutput())
+            .ToListAsync(cancellationToken);
+    }
 }

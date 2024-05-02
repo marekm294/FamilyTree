@@ -37,4 +37,17 @@ public class FamilyController : BaseController
         var familyOutput = await familyService.UpdateFamilyAsync(updateFamilyInput);
         return Ok(familyOutput);
     }
+
+    [HttpGet("familyMembers/{familyId}")]
+    [RequiredGuidFilter("familyId")]
+    [ProducesResponseType<List<FamilyMemberOutput>>(StatusCodes.Status200OK)]
+    [ProducesResponseType<ErrorOutput>(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult<List<FamilyMemberOutput>>> GetFamilyMembersAsync(
+        [FromRoute] Guid familyId,
+        [FromServices] IFamilyMemberService familyMemberService)
+    {
+        var familyMemers = await familyMemberService.GetFamilyMembersAsync(familyId);
+        return Ok(familyMemers);
+    }
 }

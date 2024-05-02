@@ -8,8 +8,6 @@ using IntegrationTests.TestsClasses.Families.Data;
 using System.Net.Http.Json;
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
-using IntegrationTests.TestsClasses.FamilyMembers.Data;
-using Shared.Models.Inputs.FamilyMembers;
 
 namespace IntegrationTests.TestsClasses.Families;
 

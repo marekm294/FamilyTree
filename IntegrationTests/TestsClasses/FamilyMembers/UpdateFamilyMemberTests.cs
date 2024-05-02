@@ -5,7 +5,6 @@ using System.Net.Http.Json;
 using System.Net;
 using System.Text.Json;
 using IntegrationTests.TestsClasses.FamilyMembers.Data;
-using Microsoft.EntityFrameworkCore;
 using IntegrationTests.TestsClasses.Families.Data;
 
 namespace IntegrationTests.TestsClasses.FamilyMembers;
@@ -45,16 +44,16 @@ public partial class FamilyMembersTests
 
         response.EnsureSuccessStatusCode();
         using var content = await response.Content.ReadAsStreamAsync();
-        var familyMembersOutput = JsonSerializer.Deserialize<FamilyMemberOutput>(
+        var familyMemberOutput = JsonSerializer.Deserialize<FamilyMemberOutput>(
             content,
             JsonSerializerHelper.CLIENT_JSON_SERIALIZER_OPTIONS);
 
         //Assert
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        Assert.NotEqual(Guid.Empty, familyMembersOutput!.Id);
-        Assert.Equal(updateFamilyMemberInput.FirstName, familyMembersOutput!.FirstName);
-        Assert.Equal(updateFamilyMemberInput.LastName, familyMembersOutput!.LastName);
-        Assert.Equal(updateFamilyMemberInput.MiddleNames.Length, familyMembersOutput!.MiddleNames.Length);
+        Assert.NotEqual(Guid.Empty, familyMemberOutput!.Id);
+        Assert.Equal(updateFamilyMemberInput.FirstName, familyMemberOutput!.FirstName);
+        Assert.Equal(updateFamilyMemberInput.LastName, familyMemberOutput!.LastName);
+        Assert.Equal(updateFamilyMemberInput.MiddleNames.Length, familyMemberOutput!.MiddleNames.Length);
     }
 
     [Theory]

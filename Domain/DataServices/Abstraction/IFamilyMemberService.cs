@@ -15,4 +15,7 @@ public interface IFamilyMemberService : IDataService
     Task<bool> DeleteFamilyMemberAsync(
         DeleteQueryArgs deleteQueryArgs,
         CancellationToken cancellationToken = default);
+    Task<List<FamilyMemberOutput>> GetFamilyMembersAsync(
+        Guid familyId,
+        CancellationToken cancellationToken = default);
 }
