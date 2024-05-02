@@ -6,8 +6,6 @@ namespace Domain.DataServices.Abstraction;
 
 public interface IFamilyMemberService : IDataService
 {
-    Task<List<FamilyMemberOutput>> GetAllFamilyMemberOutputsAsync(
-        CancellationToken cancellationToken = default);
     Task<FamilyMemberOutput> CreateFamilyMemberAsync(
         CreateFamilyMemberInput createFamilyMemberInput,
         CancellationToken cancellationToken = default);

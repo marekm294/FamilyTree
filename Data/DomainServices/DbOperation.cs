@@ -2,7 +2,6 @@
 using Domain.DataServicesAbstraction;
 using Domain.Entities.Abstraction;
 using Microsoft.EntityFrameworkCore;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Data.DomainServices;
 

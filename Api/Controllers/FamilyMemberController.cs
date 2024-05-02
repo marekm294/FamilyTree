@@ -10,17 +10,6 @@ namespace Api.Controllers;
 
 public class FamilyMemberController : BaseController
 {
-    // ToDelete
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<FamilyMemberOutput>>> GetFamilyMembersAsync(
-        [FromServices] IFamilyMemberService familyMemberService)
-    {
-        var familyMemberOutputs = await familyMemberService
-            .GetAllFamilyMemberOutputsAsync();
-
-        return Ok(familyMemberOutputs);
-    }
-
     [HttpPost]
     [RequiredFilter("createFamilyMemberInput")]
     [ValidationFilter<CreateFamilyMemberInput>()]

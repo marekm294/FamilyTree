@@ -24,12 +24,6 @@ internal sealed class FamilyMemberService : IFamilyMemberService
         _entityProvider = entityProvider ?? throw new ArgumentNullException(nameof(entityProvider));
         _dbOperation = dbOperation ?? throw new ArgumentNullException(nameof(dbOperation));
     }
-    public Task<List<FamilyMemberOutput>> GetAllFamilyMemberOutputsAsync(CancellationToken cancellationToken = default)
-    {
-        return _familyMembers
-            .Select(fm => fm.ToFamilyMemberOutput())
-            .ToListAsync(cancellationToken);
-    }
 
     public async Task<FamilyMemberOutput> CreateFamilyMemberAsync(
         CreateFamilyMemberInput createFamilyMemberInput,
