@@ -29,7 +29,7 @@ public partial class FamilyMembersTests
             MiddleNames = [ "Jan", "Pavel" ],
             Birth = new Event()
             {
-                Date = new DateTime(1997, 4, 29),
+                Date = new DateOnly(1997, 4, 29),
                 Place = "Opava",
             },
             DeathDate = null,
@@ -85,7 +85,7 @@ public partial class FamilyMembersTests
             LastName = "",
             Birth = new Event()
             {
-                Date = new DateTime(1997, 4, 29),
+                Date = new DateOnly(1997, 4, 29),
                 Place = "Opava",
             },
             DeathDate = null,

@@ -35,7 +35,7 @@ public partial class FamilyMembersTests
             MiddleNames = ["Marek", "Honza", "Pavel"],
             Birth = new Event()
             {
-                Date = new DateTime(1997, 4, 30),
+                Date = new DateOnly(1997, 4, 30),
                 Place = "Praha",
             },
             DeathDate = null
@@ -98,7 +98,7 @@ public partial class FamilyMembersTests
             LastName = shouldSendValidInput ? "Name2" : "",
             Birth = new Event()
             {
-                Date = new DateTime(1997, 4, 29),
+                Date = new DateOnly(1997, 4, 29),
                 Place = "Opava",
             },
             DeathDate = null,

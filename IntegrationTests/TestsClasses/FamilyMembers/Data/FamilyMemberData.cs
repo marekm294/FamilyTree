@@ -14,7 +14,7 @@ internal static class FamilyMemberData
             LastName = $"LastName{i}",
             Birth = new Event()
             {
-                Date = new DateTime(1997, 4, 29),
+                Date = new DateOnly(1997, 4, 29),
                 Place = "Opava",
             },
             DeathDate = DateTime.Now.AddDays(5),
