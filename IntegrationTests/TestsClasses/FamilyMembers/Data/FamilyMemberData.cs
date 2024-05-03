@@ -1,4 +1,5 @@
 ﻿using Data.Schemes;
+using Shared.Types;
 
 namespace IntegrationTests.TestsClasses.FamilyMembers.Data;
 
@@ -11,7 +12,11 @@ internal static class FamilyMemberData
         {
             FirstName = $"FirstName{i}",
             LastName = $"LastName{i}",
-            BirthDate = DateTime.Now,
+            Birth = new Event()
+            {
+                Date = new DateTime(1997, 4, 29),
+                Place = "Opava",
+            },
             DeathDate = DateTime.Now.AddDays(5),
         };
     }

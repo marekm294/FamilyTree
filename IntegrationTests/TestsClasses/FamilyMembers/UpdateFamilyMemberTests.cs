@@ -6,6 +6,7 @@ using System.Net;
 using System.Text.Json;
 using IntegrationTests.TestsClasses.FamilyMembers.Data;
 using IntegrationTests.TestsClasses.Families.Data;
+using Shared.Types;
 
 namespace IntegrationTests.TestsClasses.FamilyMembers;
 
@@ -32,7 +33,11 @@ public partial class FamilyMembersTests
             FirstName = "Marek",
             LastName = "Mička",
             MiddleNames = ["Marek", "Honza", "Pavel"],
-            BirthDate = new DateTime(1997, 4, 29),
+            Birth = new Event()
+            {
+                Date = new DateTime(1997, 4, 30),
+                Place = "Praha",
+            },
             DeathDate = null
         };
 
@@ -54,6 +59,11 @@ public partial class FamilyMembersTests
         Assert.Equal(updateFamilyMemberInput.FirstName, familyMemberOutput!.FirstName);
         Assert.Equal(updateFamilyMemberInput.LastName, familyMemberOutput!.LastName);
         Assert.Equal(updateFamilyMemberInput.MiddleNames.Length, familyMemberOutput!.MiddleNames.Length);
+        // event is updated
+        Assert.NotEqual(updateFamilyMemberInput.Birth.Date, familyMemberScheme.Birth.Date);
+        Assert.NotEqual(updateFamilyMemberInput.Birth.Place, familyMemberScheme.Birth.Place);
+        Assert.Equal(updateFamilyMemberInput.Birth.Date, familyMemberOutput.Birth.Date);
+        Assert.Equal(updateFamilyMemberInput.Birth.Place, familyMemberOutput.Birth.Place);
     }
 
     [Theory]
@@ -86,7 +96,11 @@ public partial class FamilyMembersTests
             Version = shouldSendValidVersion ? familyMemberScheme.Version : [0, 1, 2, 3, 4, 5, 6, 7],
             FirstName = shouldSendValidInput ? "Name" : "",
             LastName = shouldSendValidInput ? "Name2" : "",
-            BirthDate = new DateTime(1997, 4, 29),
+            Birth = new Event()
+            {
+                Date = new DateTime(1997, 4, 29),
+                Place = "Opava",
+            },
             DeathDate = null,
         };
 

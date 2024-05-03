@@ -43,7 +43,10 @@ public class BaseFactoryCollectionTestClass : IAsyncLifetime
         
         var serviceScope = _testWebApplicationFactory.Services.CreateScope();
         var appDatabaseContext = serviceScope.ServiceProvider.GetRequiredService<AppDatabaseContext>();
+
         appDatabaseContext.RemoveRange(appDatabaseContext.FamilyMembers);
+        appDatabaseContext.RemoveRange(appDatabaseContext.Families);
+
         await appDatabaseContext.SaveChangesAsync();
     }
 }

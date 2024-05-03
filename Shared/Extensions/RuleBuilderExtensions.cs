@@ -23,8 +23,8 @@ internal static class RuleBuilderExtensions
             .WithMessage($"{propertyName} is required");
     }
 
-    public static IRuleBuilderOptions<T, string> MaximumLength<T>(
-        this IRuleBuilder<T, string> ruleBuilder,
+    public static IRuleBuilderOptions<T, string?> MaximumLength<T>(
+        this IRuleBuilder<T, string?> ruleBuilder,
         int maximumLength,
         string propertyName)
     {

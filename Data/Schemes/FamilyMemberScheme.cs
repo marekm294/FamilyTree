@@ -2,6 +2,7 @@
 
 using Data.Schemes.Abstraction;
 using Domain.Entities;
+using Shared.Types;
 
 namespace Data.Schemes;
 
@@ -15,7 +16,7 @@ internal class FamilyMemberScheme : DbScheme, IFamilyMember
 
     public string[] MiddleNames { get; set; } = [];
 
-    public DateTime? BirthDate { get; set; }
+    public Event Birth { get; set; } = new();
 
     public DateTime? DeathDate { get; set; }
 }

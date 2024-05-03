@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Shared.Helpers;
 using Shared.Models.Inputs.FamilyMembers;
 using Shared.Models.Outputs;
+using Shared.Types;
 using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
@@ -26,7 +27,11 @@ public partial class FamilyMembersTests
             FirstName = "Marek",
             LastName = "Mička",
             MiddleNames = [ "Jan", "Pavel" ],
-            BirthDate = new DateTime(1997, 4, 29),
+            Birth = new Event()
+            {
+                Date = new DateTime(1997, 4, 29),
+                Place = "Opava",
+            },
             DeathDate = null,
             FamilyId = familyScheme.Id,
         };
@@ -78,7 +83,11 @@ public partial class FamilyMembersTests
         {
             FirstName = "",
             LastName = "",
-            BirthDate = new DateTime(1997, 4, 29),
+            Birth = new Event()
+            {
+                Date = new DateTime(1997, 4, 29),
+                Place = "Opava",
+            },
             DeathDate = null,
             FamilyId = familyId,
         };

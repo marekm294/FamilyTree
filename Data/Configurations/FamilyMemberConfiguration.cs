@@ -1,4 +1,5 @@
 ﻿using Data.Configurations.Abstraction;
+using Data.Extensions;
 using Data.Schemes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -25,6 +26,9 @@ internal sealed class FamilyMemberConfiguration : DbEntityConfiguration<FamilyMe
 
         builder
             .PrimitiveCollection(f => f.MiddleNames);
+
+        builder
+            .ComplexPropertyEvent(f => f.Birth);
 
         builder
             .ToTable("FamilyMembers");

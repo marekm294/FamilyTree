@@ -2,6 +2,8 @@
 using Shared.Extensions;
 using Shared.Helpers.MaxLengthHelpers;
 using Shared.Models.Inputs.FamilyMembers;
+using Shared.Types;
+using Shared.Validators.TypeValidators;
 
 namespace Shared.Validators.FamilyMembers;
 
@@ -23,8 +25,9 @@ internal sealed class CreateFamilyMemberInputValidator : AbstractValidator<Creat
         RuleFor(fm => fm.MiddleNames)
             .NotNull("Middle Names");
 
-        RuleFor(fm => fm.BirthDate)
-            .MustBeUtc("Birth Date");
+        RuleFor(fm => fm.Birth)
+            .NotEmpty("Birth")
+            .SetValidator(new EventValidator("BirthDate", "BirthPlace"));
 
         RuleFor(fm => fm.DeathDate)
             .MustBeUtc("Death Date");
