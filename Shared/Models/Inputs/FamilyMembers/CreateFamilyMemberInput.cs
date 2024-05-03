@@ -9,5 +9,5 @@ public sealed class CreateFamilyMemberInput
     public string LastName { get; set; } = "";
     public string[] MiddleNames { get; set; } = [];
     public Event Birth { get; set; } = new();
-    public DateTime? DeathDate { get; set; }
+    public Event Death { get; set; } = new();
 }

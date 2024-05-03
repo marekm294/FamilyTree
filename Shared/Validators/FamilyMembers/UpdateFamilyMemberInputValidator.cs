@@ -26,9 +26,10 @@ internal sealed class UpdateFamilyMemberInputValidator : AbstractValidator<Updat
 
         RuleFor(fm => fm.Birth)
             .NotEmpty("Birth")
-            .SetValidator(new EventValidator("BirthDate", "BirthPlace"));
+            .SetValidator(new EventValidator("BirthPlace"));
 
-        RuleFor(fm => fm.DeathDate)
-            .MustBeUtc("Death Date");
+        RuleFor(fm => fm.Death)
+            .NotEmpty("Death")
+            .SetValidator(new EventValidator("DeathPlace"));
     }
 }

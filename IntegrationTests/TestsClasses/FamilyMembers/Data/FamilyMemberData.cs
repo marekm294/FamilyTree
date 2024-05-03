@@ -17,7 +17,11 @@ internal static class FamilyMemberData
                 Date = new DateOnly(1997, 4, 29),
                 Place = "Opava",
             },
-            DeathDate = DateTime.Now.AddDays(5),
+            Death = new Event()
+            {
+                Date = new DateOnly(2058, 9, 21),
+                Place = null,
+            },
         };
     }
 }

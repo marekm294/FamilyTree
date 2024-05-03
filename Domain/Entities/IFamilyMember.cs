@@ -14,9 +14,9 @@ public interface IFamilyMember : IEntity
 
     string[] MiddleNames { get; set; }
 
-    public Event Birth { get; set; }
+    Event Birth { get; set; }
 
-    DateTime? DeathDate { get; set; }
+    Event Death { get; set; }
 
     public void InitializeFamilyMember(CreateFamilyMemberInput createFamilyMemberInput)
     {
@@ -25,7 +25,7 @@ public interface IFamilyMember : IEntity
         LastName = createFamilyMemberInput.LastName;
         MiddleNames = createFamilyMemberInput.MiddleNames;
         Birth = createFamilyMemberInput.Birth;
-        DeathDate = createFamilyMemberInput.DeathDate;
+        Death = createFamilyMemberInput.Death;
     }
 
     public void UpdateFamilyMember(UpdateFamilyMemberInput updateFamilyMemberInput)
@@ -34,6 +34,6 @@ public interface IFamilyMember : IEntity
         LastName = updateFamilyMemberInput.LastName;
         MiddleNames = updateFamilyMemberInput.MiddleNames;
         Birth = updateFamilyMemberInput.Birth;
-        DeathDate = updateFamilyMemberInput.DeathDate;
+        Death = updateFamilyMemberInput.Death;
     }
 }

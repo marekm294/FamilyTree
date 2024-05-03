@@ -15,20 +15,23 @@ internal sealed class FamilyMemberConfiguration : DbEntityConfiguration<FamilyMe
             .Configure(builder);
 
         builder
-            .Property(f => f.FirstName)
+            .Property(fm => fm.FirstName)
             .IsRequired(true)
             .HasMaxLength(FamilyMemberMaxLenghtHelpers.FIRST_NAME_MAX_LENGTH);
 
         builder
-            .Property(f => f.LastName)
+            .Property(fm => fm.LastName)
             .IsRequired(true)
             .HasMaxLength(FamilyMemberMaxLenghtHelpers.LAST_NAME_MAX_LENGTH);
 
         builder
-            .PrimitiveCollection(f => f.MiddleNames);
+            .PrimitiveCollection(fm => fm.MiddleNames);
 
         builder
-            .ComplexPropertyEvent(f => f.Birth);
+            .ComplexPropertyEvent(fm => fm.Birth);
+
+        builder
+            .ComplexProperty(fm => fm.Death);
 
         builder
             .ToTable("FamilyMembers");

@@ -32,7 +32,11 @@ public partial class FamilyMembersTests
                 Date = new DateOnly(1997, 4, 29),
                 Place = "Opava",
             },
-            DeathDate = null,
+            Death = new Event()
+            {
+                Date = null,
+                Place = null,
+            },
             FamilyId = familyScheme.Id,
         };
 
@@ -88,7 +92,11 @@ public partial class FamilyMembersTests
                 Date = new DateOnly(1997, 4, 29),
                 Place = "Opava",
             },
-            DeathDate = null,
+            Death = new Event()
+            {
+                Date = null,
+                Place = null,
+            },
             FamilyId = familyId,
         };
 

@@ -38,7 +38,11 @@ public partial class FamilyMembersTests
                 Date = new DateOnly(1997, 4, 30),
                 Place = "Praha",
             },
-            DeathDate = null
+            Death = new Event()
+            {
+                Date = null,
+                Place = null,
+            },
         };
 
         //Act
@@ -101,7 +105,11 @@ public partial class FamilyMembersTests
                 Date = new DateOnly(1997, 4, 29),
                 Place = "Opava",
             },
-            DeathDate = null,
+            Death = new Event()
+            {
+                Date = null,
+                Place = null,
+            },
         };
 
         if (shouldSendInput is false)

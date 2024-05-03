@@ -18,5 +18,5 @@ internal class FamilyMemberScheme : DbScheme, IFamilyMember
 
     public Event Birth { get; set; } = new();
 
-    public DateTime? DeathDate { get; set; }
+    public Event Death { get; set; } = new();
 }
