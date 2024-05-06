@@ -31,7 +31,7 @@ internal sealed class FamilyMemberConfiguration : DbEntityConfiguration<FamilyMe
             .ComplexPropertyEvent(fm => fm.Birth);
 
         builder
-            .ComplexProperty(fm => fm.Death);
+            .ComplexPropertyEvent(fm => fm.Death);
 
         builder
             .ToTable("FamilyMembers");
