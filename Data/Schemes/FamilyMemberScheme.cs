@@ -19,4 +19,6 @@ internal class FamilyMemberScheme : DbScheme, IFamilyMember
     public Event Birth { get; set; } = new();
 
     public Event Death { get; set; } = new();
+
+    public string? AboutMember { get; set; }
 }

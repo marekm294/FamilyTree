@@ -34,6 +34,10 @@ internal sealed class FamilyMemberConfiguration : DbEntityConfiguration<FamilyMe
             .ComplexPropertyEvent(fm => fm.Death);
 
         builder
+            .Property(fm => fm.AboutMember)
+            .IsRequired(false);
+
+        builder
             .ToTable("FamilyMembers");
     }
 }

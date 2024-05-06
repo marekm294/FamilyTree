@@ -38,6 +38,7 @@ public partial class FamilyMembersTests
                 Place = null,
             },
             FamilyId = familyScheme.Id,
+            AboutMember = "He was awsome."
         };
 
         //Act

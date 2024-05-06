@@ -18,6 +18,8 @@ public interface IFamilyMember : IEntity
 
     Event Death { get; set; }
 
+    string? AboutMember { get; set; }
+
     public void InitializeFamilyMember(CreateFamilyMemberInput createFamilyMemberInput)
     {
         FamilyId = createFamilyMemberInput.FamilyId;
@@ -26,6 +28,7 @@ public interface IFamilyMember : IEntity
         MiddleNames = createFamilyMemberInput.MiddleNames;
         Birth = createFamilyMemberInput.Birth;
         Death = createFamilyMemberInput.Death;
+        AboutMember = createFamilyMemberInput.AboutMember;
     }
 
     public void UpdateFamilyMember(UpdateFamilyMemberInput updateFamilyMemberInput)
@@ -35,5 +38,6 @@ public interface IFamilyMember : IEntity
         MiddleNames = updateFamilyMemberInput.MiddleNames;
         Birth = updateFamilyMemberInput.Birth;
         Death = updateFamilyMemberInput.Death;
+        AboutMember = updateFamilyMemberInput.AboutMember;
     }
 }

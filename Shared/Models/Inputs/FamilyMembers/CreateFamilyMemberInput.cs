@@ -10,4 +10,5 @@ public sealed class CreateFamilyMemberInput
     public string[] MiddleNames { get; set; } = [];
     public Event Birth { get; set; } = new();
     public Event Death { get; set; } = new();
+    public string? AboutMember { get; set; }
 }

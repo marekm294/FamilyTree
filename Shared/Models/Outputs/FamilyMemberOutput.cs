@@ -12,4 +12,5 @@ public sealed class FamilyMemberOutput : IIdable
     public required string[] MiddleNames { get; init; }
     public required Event Birth { get; init; }
     public required Event Death { get; init; }
+    public required string? AboutMember { get; set; }
 }
