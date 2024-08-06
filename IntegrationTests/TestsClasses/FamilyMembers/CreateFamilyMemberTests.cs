@@ -2,6 +2,7 @@
 using IntegrationTests.TestsClasses.Families.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using NetTopologySuite.Geometries;
 using Shared.Helpers;
 using Shared.Models.Inputs.FamilyMembers;
 using Shared.Models.Outputs;
@@ -21,8 +22,8 @@ public partial class FamilyMembersTests
         var familyScheme = FamilyData.GetFamilyScheme();
         await _appDatabaseContext.AddAsync(familyScheme);
         await _appDatabaseContext.SaveChangesAsync();
-
-        var createFamilyMemberInput = new CreateFamilyMemberInput()
+        
+            var createFamilyMemberInput = new CreateFamilyMemberInput()
         {
             FirstName = "Marek",
             LastName = "Mička",
@@ -30,12 +31,17 @@ public partial class FamilyMembersTests
             Birth = new Event()
             {
                 Date = new DateOnly(1997, 4, 29),
-                Place = "Opava",
+                Place = new Place()
+                {
+                    Country = "Czech Republic",
+                    City = "Opava",
+                    Coordinates = new Point(17.904444, 49.938056),
+                },
             },
             Death = new Event()
             {
                 Date = null,
-                Place = null,
+                Place = new Place(),
             },
             FamilyId = familyScheme.Id,
             AboutMember = "He was awsome."
@@ -58,6 +64,8 @@ public partial class FamilyMembersTests
         Assert.NotEqual(Guid.Empty, familyMemberOutput!.Id);
         Assert.Equal(createFamilyMemberInput.FirstName, familyMemberOutput!.FirstName);
         Assert.Equal(createFamilyMemberInput.MiddleNames.Length, familyMemberOutput!.MiddleNames.Length);
+        Assert.Equal(createFamilyMemberInput.Birth.Place.Country, familyMemberOutput!.Birth.Place.Country);
+        Assert.Equal(createFamilyMemberInput.Birth.Place.Coordinates, familyMemberOutput!.Birth.Place.Coordinates);
 
         using var assertScope = _serviceScope.ServiceProvider.CreateScope();
         var context = assertScope.ServiceProvider.GetRequiredService<AppDatabaseContext>();
@@ -91,12 +99,16 @@ public partial class FamilyMembersTests
             Birth = new Event()
             {
                 Date = new DateOnly(1997, 4, 29),
-                Place = "Opava",
+                Place = new Place()
+                {
+                    Country = "Czech Republic",
+                    City = "Opava",
+                },
             },
             Death = new Event()
             {
                 Date = null,
-                Place = null,
+                Place = new Place(),
             },
             FamilyId = familyId,
         };

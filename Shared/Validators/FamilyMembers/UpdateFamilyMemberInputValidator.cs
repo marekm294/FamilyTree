@@ -25,11 +25,11 @@ internal sealed class UpdateFamilyMemberInputValidator : AbstractValidator<Updat
             .NotNull("Middle Names");
 
         RuleFor(fm => fm.Birth)
-            .NotEmpty("Birth")
+            .NotNull("Birth")
             .SetValidator(new EventValidator("BirthPlace"));
 
         RuleFor(fm => fm.Death)
-            .NotEmpty("Death")
+            .NotNull("Death")
             .SetValidator(new EventValidator("DeathPlace"));
     }
 }

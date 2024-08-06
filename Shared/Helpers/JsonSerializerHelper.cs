@@ -8,6 +8,10 @@ public static class JsonSerializerHelper
     public static readonly JsonSerializerOptions CLIENT_JSON_SERIALIZER_OPTIONS = new()
     {
         PropertyNameCaseInsensitive = true,
-        Converters = { new DateTimeJsonConverter() }
+        Converters = 
+        {
+            new DateTimeJsonConverter(),
+            new PointJsonConverter(),
+        },
     };
 }

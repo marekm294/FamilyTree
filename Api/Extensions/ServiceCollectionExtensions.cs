@@ -4,6 +4,7 @@ using Data.Extensions;
 using Domain.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Extensions;
+using Shared.JsonConverters;
 
 namespace Api.Extensions;
 
@@ -13,7 +14,12 @@ public static class ServiceCollectionExtensions
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        services.AddControllers();
+        services
+            .AddControllers()
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.Converters.Add(new PointJsonConverter());
+            });
 
         services
         .AddMvc(options =>

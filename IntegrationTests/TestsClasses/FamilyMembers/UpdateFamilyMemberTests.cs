@@ -7,6 +7,7 @@ using System.Text.Json;
 using IntegrationTests.TestsClasses.FamilyMembers.Data;
 using IntegrationTests.TestsClasses.Families.Data;
 using Shared.Types;
+using NetTopologySuite.Geometries;
 
 namespace IntegrationTests.TestsClasses.FamilyMembers;
 
@@ -36,12 +37,17 @@ public partial class FamilyMembersTests
             Birth = new Event()
             {
                 Date = new DateOnly(1997, 4, 30),
-                Place = "Praha",
+                Place = new Place()
+                {
+                    Country = "USA",
+                    City = "Opava",
+                    Coordinates = new Point(17.904444, 49.938056),
+                },
             },
             Death = new Event()
             {
                 Date = null,
-                Place = null,
+                Place = new Place(),
             },
         };
 
@@ -65,9 +71,9 @@ public partial class FamilyMembersTests
         Assert.Equal(updateFamilyMemberInput.MiddleNames.Length, familyMemberOutput!.MiddleNames.Length);
         // event is updated
         Assert.NotEqual(updateFamilyMemberInput.Birth.Date, familyMemberScheme.Birth.Date);
-        Assert.NotEqual(updateFamilyMemberInput.Birth.Place, familyMemberScheme.Birth.Place);
+        Assert.NotEqual(updateFamilyMemberInput.Birth.Place.Country, familyMemberScheme.Birth.Place.Country);
         Assert.Equal(updateFamilyMemberInput.Birth.Date, familyMemberOutput.Birth.Date);
-        Assert.Equal(updateFamilyMemberInput.Birth.Place, familyMemberOutput.Birth.Place);
+        Assert.Equal(updateFamilyMemberInput.Birth.Place.Country, familyMemberOutput.Birth.Place.Country);
     }
 
     [Theory]
@@ -103,12 +109,16 @@ public partial class FamilyMembersTests
             Birth = new Event()
             {
                 Date = new DateOnly(1997, 4, 29),
-                Place = "Opava",
+                Place = new Place()
+                {
+                    Country = "Czech Republic",
+                    City = "Opava",
+                },
             },
             Death = new Event()
             {
                 Date = null,
-                Place = null,
+                Place = new Place(),
             },
         };
 

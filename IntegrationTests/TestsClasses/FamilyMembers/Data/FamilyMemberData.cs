@@ -15,12 +15,16 @@ internal static class FamilyMemberData
             Birth = new Event()
             {
                 Date = new DateOnly(1997, 4, 29),
-                Place = "Opava",
+                Place = new Place()
+                {
+                    Country = "Czech Republic",
+                    City = "Opava",
+                },
             },
             Death = new Event()
             {
                 Date = new DateOnly(2058, 9, 21),
-                Place = null,
+                Place = new Place(),
             },
         };
     }

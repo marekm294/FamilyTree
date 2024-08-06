@@ -36,7 +36,11 @@ public static class ServiceCollectionExtensions
             options
                 .UseSqlServer(
                     connectionString,
-                    x => x.MigrationsHistoryTable("__MigrationsHistory"))
+                    options =>
+                    {
+                        options.MigrationsHistoryTable("__MigrationsHistory");
+                        options.UseNetTopologySuite();
+                    })
                 .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
     }
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Shared.Helpers.MaxLengthHelpers;
 using Shared.Types;
 using System.Linq.Expressions;
@@ -19,10 +20,10 @@ internal static class EntityTypeBuilderExtensions
                 complexPropertyBuilder
                     .Property(e => e.Date)
                     .IsRequired(false);
+
                 complexPropertyBuilder
-                    .Property(pn => pn.Place)
-                    .HasMaxLength(EventMaxLengthHelper.EVENT_PLACE_MAX_LENGTH)
-                    .IsRequired(false);
+                    .ComplexPropertyPlace(pn => pn.Place)
+                    .IsRequired(true);
             });
 
         return builder;

@@ -2,7 +2,6 @@
 using Shared.Extensions;
 using Shared.Helpers.MaxLengthHelpers;
 using Shared.Models.Inputs.FamilyMembers;
-using Shared.Types;
 using Shared.Validators.TypeValidators;
 
 namespace Shared.Validators.FamilyMembers;
