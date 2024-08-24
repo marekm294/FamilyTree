@@ -6,7 +6,7 @@ namespace Domain.Entities;
 
 public interface IFamilyMember : IEntity
 {
-    Guid FamilyId {  get; set; }
+    Guid FamilyId { get; set; }
 
     string FirstName { get; set; }
 

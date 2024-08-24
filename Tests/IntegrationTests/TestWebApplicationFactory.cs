@@ -3,7 +3,7 @@ using SystemTestsCore;
 
 namespace IntegrationTests;
 
-public class TestWebApplicationFactory 
+public class TestWebApplicationFactory
     : TestWebApplicationFactory<TestWebApplicationFactory, Program>
 {
 }

@@ -46,7 +46,7 @@ internal sealed class FamilyMemberService : IFamilyMemberService
         _dbOperation.AllowUpdate(familyMemberEntity);
         familyMemberEntity.UpdateFamilyMember(updateFamilyMemberInput);
         await _dbOperation.SaveChangesAsync(cancellationToken);
-     
+
         return familyMemberEntity.ToFamilyMemberOutput();
     }
 

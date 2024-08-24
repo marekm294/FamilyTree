@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Shared.Helpers.MaxLengthHelpers;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Shared.Types;
 using System.Linq.Expressions;
 

@@ -9,7 +9,7 @@ public sealed class EntityToUpdateNotFoundException : Exception, ICustomExceptio
     public EntityToUpdateNotFoundException(Exception? innerException = null)
         : base("Updated entity was not found. Entity doesn't exist or was modified by different user. Reload data!", innerException)
     {
-        
+
     }
 
     public HttpStatusCode StatusCode => HttpStatusCode.NotFound;

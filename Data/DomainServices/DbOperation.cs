@@ -26,7 +26,7 @@ internal sealed class DbOperation : IDbOperation
     public void AllowUpdate<TEntity>(TEntity entity)
         where TEntity : IEntity
     {
-        _appDatabaseContext.Attach(entity); 
+        _appDatabaseContext.Attach(entity);
     }
 
     public void Remove<TEntity>(TEntity entity)

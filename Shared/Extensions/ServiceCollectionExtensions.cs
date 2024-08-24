@@ -22,7 +22,7 @@ public static class ServiceCollectionExtensions
         return services
             .AddScoped<IValidator<CreateFamilyMemberInput>, CreateFamilyMemberInputValidator>()
             .AddScoped<IValidator<UpdateFamilyMemberInput>, UpdateFamilyMemberInputValidator>()
-            
+
             .AddScoped<IValidator<CreateFamilyInput>, CreateFamilyInputValidator>()
             .AddScoped<IValidator<UpdateFamilyInput>, UpdateFamilyInputValidator>()
 

@@ -1,12 +1,12 @@
-﻿using Shared.Helpers;
-using Shared.Models.Outputs;
-using System.Net.Http.Json;
-using System.Net;
-using System.Text.Json;
-using Data;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Shared.Helpers;
 using Shared.Models.Inputs.Families;
+using Shared.Models.Outputs;
+using System.Net;
+using System.Net.Http.Json;
+using System.Text.Json;
 
 namespace IntegrationTests.TestsClasses.Families;
 
@@ -18,9 +18,9 @@ public partial class FamiliesTests
         //Arrange
         var createFamilyInput = new CreateFamilyInput()
         {
-            FamilyName =  "FamilyName",
+            FamilyName = "FamilyName",
         };
-        
+
         //Act
         var response = await _httpClient.PostAsJsonAsync(
             FAMILIES_API,

@@ -40,7 +40,7 @@ public static class ServiceCollectionExtensions
 
         //services.AddFluentValidationAutoValidation(config =>
         //{
-            //config.DisableDataAnnotationsValidation = true;
+        //config.DisableDataAnnotationsValidation = true;
         //});
 
         return services

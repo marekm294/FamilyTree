@@ -1,5 +1,4 @@
-﻿using Domain.DataServices;
-using Domain.DataServices.Abstraction;
+﻿using Domain.DataServices.Abstraction;
 using Domain.Services;
 using Domain.Services.Abstraction;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,7 +26,7 @@ public static class ServiceCollectionExtensions
             .Where(t => t != typeof(IDataService))
             .ToList();
 
-        foreach(var serviceType in serviceTypes)
+        foreach (var serviceType in serviceTypes)
         {
             var serviceImplementationType = assembly
                 .GetTypes()

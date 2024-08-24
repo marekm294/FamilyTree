@@ -1,5 +1,4 @@
 ﻿using Domain.Exceptions.Abstraction;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Shared.Models.Outputs;
 using System.Net;
 

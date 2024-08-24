@@ -16,7 +16,7 @@ public static class WebApplicationExtensions
         webApplication.UseHttpsRedirection();
 
         webApplication.UseAuthorization();
-            
+
         webApplication.MapControllers();
 
         webApplication.UseMiddlewares();

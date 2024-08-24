@@ -61,7 +61,7 @@ public static class ServiceCollectionExtensions
     private static IServiceCollection AddQueries(this IServiceCollection services)
     {
         var entityTypes = GetIEntityTypes();
-        
+
         foreach (var entityType in entityTypes)
         {
             var schemeType = GetSchemaForEntity(entityType);

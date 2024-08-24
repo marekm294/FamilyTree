@@ -1,10 +1,10 @@
-﻿using System.Net;
-using Shared.QueryArgs;
+﻿using IntegrationTests.TestsClasses.Families.Data;
 using IntegrationTests.TestsClasses.FamilyMembers.Data;
 using Shared.Helpers;
 using Shared.Models.Outputs;
+using Shared.QueryArgs;
+using System.Net;
 using System.Text.Json;
-using IntegrationTests.TestsClasses.Families.Data;
 
 namespace IntegrationTests.TestsClasses.FamilyMembers;
 

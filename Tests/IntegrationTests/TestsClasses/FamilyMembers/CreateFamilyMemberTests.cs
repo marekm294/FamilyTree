@@ -22,12 +22,12 @@ public partial class FamilyMembersTests
         var familyScheme = FamilyData.GetFamilyScheme();
         await _appDatabaseContext.AddAsync(familyScheme);
         await _appDatabaseContext.SaveChangesAsync();
-        
-            var createFamilyMemberInput = new CreateFamilyMemberInput()
+
+        var createFamilyMemberInput = new CreateFamilyMemberInput()
         {
             FirstName = "Marek",
             LastName = "Mička",
-            MiddleNames = [ "Jan", "Pavel" ],
+            MiddleNames = ["Jan", "Pavel"],
             Birth = new Event()
             {
                 Date = new DateOnly(1997, 4, 29),

@@ -9,7 +9,7 @@ internal sealed class EntityUpdateException : Exception, ICustomException
     public EntityUpdateException(Exception? innerException = null)
         : base("Error while saving entity to database.", innerException)
     {
-        
+
     }
 
     public HttpStatusCode StatusCode => HttpStatusCode.BadRequest;
