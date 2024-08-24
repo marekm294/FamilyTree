@@ -1,6 +1,7 @@
 ﻿using Data.Schemes;
 using Data.Schemes.Abstraction;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Reflection;
 
 namespace Data;
@@ -14,6 +15,7 @@ internal class AppDatabaseContext : DbContext
 
     public virtual DbSet<FamilyMemberScheme> FamilyMembers { get; set; }
     public virtual DbSet<FamilyScheme> Families { get; set; }
+    public virtual DbSet<WeddingScheme> Weddings { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -23,16 +25,17 @@ internal class AppDatabaseContext : DbContext
         base.OnModelCreating(modelBuilder);
     }
 
-    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         foreach (var entry in ChangeTracker.Entries())
         {
-            if (entry.Entity is DbScheme dbEntity && entry.State == EntityState.Modified)
+            if (entry.State == EntityState.Modified &&
+                entry.Entity is DbScheme dbEntity)
             {
                 dbEntity.UpdatedAt = DateTime.UtcNow;
             }
         }
 
-        return base.SaveChangesAsync(cancellationToken);
+        return await base.SaveChangesAsync(cancellationToken);
     }
 }

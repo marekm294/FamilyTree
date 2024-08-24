@@ -3,7 +3,7 @@ using Xunit.Abstractions;
 
 namespace IntegrationTests.TestsClasses.FamilyMembers;
 
-public partial class FamilyMembersTests : BaseFactoryCollectionTestClass
+public partial class FamilyMembersTests : FactoryCollectionTestClass
 {
     private const string FAMILY_MEMBERS_API = "/api/familyMember";
 

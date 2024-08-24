@@ -1,49 +1,42 @@
 ﻿using Data;
-using IntegrationTests.Helpers;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
-using Xunit.Abstractions;
 
-namespace IntegrationTests.TestsClasses.Abstraction;
+namespace SystemTestsCore;
 
-[Collection(Constants.FACTORY_COLLECTION_FIXTURE)]
-public class BaseFactoryCollectionTestClass : IAsyncLifetime
+public class BaseFactoryCollectionTestClass<TDatabaseFixture, TFactory, TProgram>
+    where TDatabaseFixture : BaseDatabaseFixture<TFactory, TProgram>
+    where TFactory : WebApplicationFactory<TProgram>, new()
+    where TProgram : class
 {
-    protected readonly DatabaseFixture _fixture;
-    protected readonly ITestOutputHelper _testOutputHelper;
-    protected readonly TestWebApplicationFactory _testWebApplicationFactory;
+    protected readonly TDatabaseFixture _fixture;
+    protected readonly TFactory _testWebApplicationFactory;
     protected readonly HttpClient _httpClient;
-    internal IServiceScope _serviceScope = null!;
+    protected IServiceScope _serviceScope = null!;
     internal AppDatabaseContext _appDatabaseContext = null!;
 
-    public BaseFactoryCollectionTestClass(
-        DatabaseFixture fixture,
-        ITestOutputHelper testOutputHelper)
+    public BaseFactoryCollectionTestClass(TDatabaseFixture fixture)
     {
         _fixture = fixture ?? throw new ArgumentNullException(nameof(fixture));
-        _testOutputHelper = testOutputHelper ?? throw new ArgumentNullException(nameof(testOutputHelper));
         _testWebApplicationFactory = fixture.Factory;
         _httpClient = _testWebApplicationFactory.CreateClient();
     }
 
-    public async Task DisposeAsync()
-    {
-        await ClearDatabaseAsync();
-    }
-
-    public Task InitializeAsync()
+    protected Task InitializeDatabaseAsync()
     {
         _serviceScope = _testWebApplicationFactory.Services.CreateScope();
         _appDatabaseContext = _serviceScope.ServiceProvider.GetRequiredService<AppDatabaseContext>();
         return Task.CompletedTask;
     }
 
-    private async Task ClearDatabaseAsync()
+    protected async Task ClearDatabaseAsync()
     {
         _serviceScope.Dispose();
-        
+
         var serviceScope = _testWebApplicationFactory.Services.CreateScope();
         var appDatabaseContext = serviceScope.ServiceProvider.GetRequiredService<AppDatabaseContext>();
 
+        appDatabaseContext.RemoveRange(appDatabaseContext.Weddings);
         appDatabaseContext.RemoveRange(appDatabaseContext.FamilyMembers);
         appDatabaseContext.RemoveRange(appDatabaseContext.Families);
 

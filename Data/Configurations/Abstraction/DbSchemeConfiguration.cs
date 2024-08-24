@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Data.Configurations.Abstraction;
 
-internal abstract class DbEntityConfiguration<TEntity> : IEntityTypeConfiguration<TEntity>
+internal abstract class DbSchemeConfiguration<TEntity> : IEntityTypeConfiguration<TEntity>
     where TEntity : DbScheme
 {
     public virtual void Configure(EntityTypeBuilder<TEntity> builder)

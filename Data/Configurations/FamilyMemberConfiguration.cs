@@ -7,7 +7,7 @@ using Shared.Helpers.MaxLengthHelpers;
 
 namespace Data.Configurations;
 
-internal sealed class FamilyMemberConfiguration : DbEntityConfiguration<FamilyMemberScheme>
+internal sealed class FamilyMemberConfiguration : DbSchemeConfiguration<FamilyMemberScheme>
 {
     public override void Configure(EntityTypeBuilder<FamilyMemberScheme> builder)
     {

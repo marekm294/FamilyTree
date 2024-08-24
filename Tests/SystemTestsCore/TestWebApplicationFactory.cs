@@ -1,12 +1,13 @@
-﻿using Api;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
-namespace IntegrationTests;
+namespace SystemTestsCore;
 
-public class TestWebApplicationFactory : WebApplicationFactory<Program>
+public class TestWebApplicationFactory<TAssembly, TProgram> : WebApplicationFactory<TProgram>
+    where TAssembly : WebApplicationFactory<TProgram>
+    where TProgram : class
 {
     private const string TEST_ENVIROMENT = "Test";
 
@@ -20,7 +21,7 @@ public class TestWebApplicationFactory : WebApplicationFactory<Program>
             {
                 configurationBuilder
                     .AddJsonFile(TEST_APPSETTING_FILE_NAME, false)
-                    .AddUserSecrets(typeof(TestWebApplicationFactory).Assembly);
+                    .AddUserSecrets(typeof(TAssembly).Assembly);
             });
 
         return base.CreateHost(builder);

@@ -35,11 +35,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Api\Api.csproj" />
+    <ProjectReference Include="..\..\Api\Api.csproj" />
+    <ProjectReference Include="..\SystemTestsCore\SystemTestsCore.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Using Include="Xunit" />
   </ItemGroup>
-
+	
 </Project>

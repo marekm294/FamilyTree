@@ -1,6 +1,8 @@
-﻿namespace Shared.Models.Outputs;
+﻿using Shared.Models.Abstaction;
 
-public sealed class FamilyOutput
+namespace Shared.Models.Outputs;
+
+public sealed class FamilyOutput : IIdable
 {
     public required Guid Id { get; init; }
     public required string FamilyName { get; init; }
