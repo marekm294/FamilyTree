@@ -12,4 +12,7 @@ public interface IFamilyService : IDataService
     Task<FamilyOutput> UpdateFamilyAsync(
         UpdateFamilyInput updateFamilyInput,
         CancellationToken cancellationToken = default);
+
+    Task<IEnumerable<FamilyOutput>> GetFamiliesAsync(
+        CancellationToken cancellationToken = default);
 }

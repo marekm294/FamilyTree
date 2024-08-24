@@ -1,5 +1,3 @@
 ﻿namespace Domain.DataServices.Abstraction;
 
-public interface IDataService
-{
-}
+public interface IDataService;

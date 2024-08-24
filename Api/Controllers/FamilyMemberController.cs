@@ -15,7 +15,7 @@ public class FamilyMemberController : BaseController
     [ValidationFilter<CreateFamilyMemberInput>()]
     [ProducesResponseType<Guid>(StatusCodes.Status201Created)]
     [ProducesResponseType<ErrorOutput>(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType<ErrorOutput>(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<FamilyMemberOutput>> CreateFamilyMemberAsync(
         [FromBody] CreateFamilyMemberInput createFamilyMemberInput,
         [FromServices] IFamilyMemberService familyMemberService)
@@ -30,7 +30,7 @@ public class FamilyMemberController : BaseController
     [ProducesResponseType<Guid>(StatusCodes.Status201Created)]
     [ProducesResponseType<ErrorOutput>(StatusCodes.Status400BadRequest)]
     [ProducesResponseType<ErrorOutput>(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType<ErrorOutput>(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<FamilyMemberOutput>> UpdateFamilyMemberAsync(
         [FromBody] UpdateFamilyMemberInput updateFamilyMemberInput,
         [FromServices] IFamilyMemberService familyMemberService)
@@ -46,7 +46,7 @@ public class FamilyMemberController : BaseController
     [ProducesResponseType<Guid>(StatusCodes.Status201Created)]
     [ProducesResponseType<ErrorOutput>(StatusCodes.Status400BadRequest)]
     [ProducesResponseType<ErrorOutput>(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType<ErrorOutput>(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<FamilyMemberOutput>> DeleteFamilyMemberAsync(
         [FromQuery] DeleteQueryArgs deleteQueryArgs,
         [FromServices] IFamilyMemberService familyMemberService)
