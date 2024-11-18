@@ -22,10 +22,10 @@ public static class ServiceCollectionExtensions
             });
 
         services
-        .AddMvc(options =>
-        {
-            options.ModelBinderProviders.Insert(0, new ModelBinderProvider());
-        });
+            .AddMvc(options =>
+            {
+                options.ModelBinderProviders.Insert(0, new ModelBinderProvider());
+            });
 
         // Turn off default .Net Core validation.
         services.Configure<ApiBehaviorOptions>(options =>
@@ -45,15 +45,38 @@ public static class ServiceCollectionExtensions
 
         return services
             .AddSwagger()
+            .AddCors(configuration)
             .AddHostedServices(configuration)
             .AddServices(configuration);
     }
 
-    private static IServiceCollection AddSwagger(this IServiceCollection services)
+    private static IServiceCollection AddSwagger(
+        this IServiceCollection services)
     {
         return services
             .AddEndpointsApiExplorer()
             .AddSwaggerGen();
+    }
+
+    public static IServiceCollection AddCors(
+        this IServiceCollection services,
+        IConfiguration configuration)
+    {
+        return services
+            .AddCors(corsOptions =>
+            {
+                corsOptions.AddDefaultPolicy(corsPolicyBuilder =>
+                {
+                    var origins = configuration
+                        .GetRequiredSection("Cors:Origins")
+                        .Get<string[]>() ?? throw new NullReferenceException("No Cors origins string[] in config");
+
+                    corsPolicyBuilder
+                        .WithOrigins(origins)
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
     }
 
     private static IServiceCollection AddHostedServices(

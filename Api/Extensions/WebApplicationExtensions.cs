@@ -6,6 +6,8 @@ public static class WebApplicationExtensions
 {
     public static WebApplication ConfigureWebApplication(this WebApplication webApplication)
     {
+        webApplication.UseCors();
+
         // Configure the HTTP request pipeline.
         if (webApplication.Environment.IsDevelopment())
         {
