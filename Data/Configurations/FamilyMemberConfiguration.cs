@@ -1,4 +1,5 @@
 ﻿using Data.Configurations.Abstraction;
+using Data.Exceptions;
 using Data.Extensions;
 using Data.Schemes;
 using Microsoft.EntityFrameworkCore;
@@ -36,6 +37,9 @@ internal sealed class FamilyMemberConfiguration : DbSchemeConfiguration<FamilyMe
         builder
             .Property(fm => fm.AboutMember)
             .IsRequired(false);
+
+        builder
+            .Tenant();
 
         builder
             .ToTable("FamilyMembers");

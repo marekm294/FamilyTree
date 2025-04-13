@@ -10,7 +10,7 @@ namespace IntegrationTests.TestsClasses.Families;
 public partial class FamiliesTests
 {
     [Fact]
-    public async Task Get_Family_Members_Success_Async()
+    public async Task GetFamilyMembers_ShouldReturnFamilyMemberOfFamily_WhenCorrectIdIsSent_Async()
     {
         //Arrange
         var familyScheme = FamilyData.GetFamilyScheme();
@@ -24,7 +24,7 @@ public partial class FamiliesTests
 
         var familyMembers = Enumerable
             .Range(0, familyMembersCount)
-            .Select(FamilyMemberData.GetFamilyMemberScheme)
+            .Select(n => FamilyMemberData.GetFamilyMemberScheme(n))
             .Select((fm, n) =>
             {
                 fm.FamilyId = n < family1FamilyMembersCount ? familyScheme.Id : familyScheme2.Id;
@@ -51,7 +51,7 @@ public partial class FamiliesTests
     }
 
     [Fact]
-    public async Task Get_Family_Members_Fail_Async()
+    public async Task GetFamilyMembers_ShouldReturBadRequest_WhenEmptyIdIsSent_Async()
     {
         //Arrange
         //Act

@@ -1,4 +1,5 @@
 ﻿using Data.Configurations.Abstraction;
+using Data.Exceptions;
 using Data.Extensions;
 using Data.Schemes;
 using Microsoft.EntityFrameworkCore;
@@ -31,6 +32,9 @@ internal sealed class WeddingConfiguration : DbSchemeConfiguration<WeddingScheme
             .HasPrincipalKey(fm => fm.Id)
             .OnDelete(DeleteBehavior.NoAction)
             .IsRequired(false);
+
+        builder
+            .Tenant();
 
         builder
             .ToTable("Weddings");

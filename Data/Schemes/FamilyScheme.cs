@@ -8,4 +8,5 @@ namespace Data.Schemes;
 internal class FamilyScheme : DbScheme, IFamily
 {
     public string FamilyName { get; set; }
+    public Guid TenantId { get; set; }
 }

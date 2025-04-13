@@ -4,7 +4,7 @@ using Shared.Types;
 
 namespace Domain.Entities;
 
-public interface IFamilyMember : IEntity
+public interface IFamilyMember : IEntity, ITenantable
 {
     Guid FamilyId { get; set; }
 

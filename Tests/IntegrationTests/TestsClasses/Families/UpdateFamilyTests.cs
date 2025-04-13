@@ -14,7 +14,7 @@ namespace IntegrationTests.TestsClasses.Families;
 public partial class FamiliesTests
 {
     [Fact]
-    public async Task Update_Family_Success_Async()
+    public async Task UpdateFamily_ShouldReturnOk_WhenValidInputIsSent_Async()
     {
         //Arrange
         var familyScheme = FamilyData.GetFamilyScheme();
@@ -47,13 +47,14 @@ public partial class FamiliesTests
 
         using var assertScope = _serviceScope.ServiceProvider.CreateScope();
         var context = assertScope.ServiceProvider.GetRequiredService<AppDatabaseContext>();
-        Assert.Equal(
-            await context.Families.Where(f => f.Id == familyScheme.Id).Select(f => f.FamilyName).FirstAsync(),
-            updateFamilyInput.FamilyName);
+        var familyFromDb = await context
+            .Families
+            .IgnoreQueryFilters()
+            .FirstOrDefaultAsync(f => f.Id == familyScheme.Id);
 
-        Assert.NotEqual(
-            await context.Families.Where(f => f.Id == familyScheme.Id).Select(f => f.FamilyName).FirstAsync(),
-            familyScheme.FamilyName);
+        Assert.NotNull(familyFromDb);
+        Assert.Equal(familyFromDb.FamilyName, updateFamilyInput.FamilyName);
+        Assert.NotEqual(familyFromDb.FamilyName, familyScheme.FamilyName);
     }
 
     [Theory]
@@ -61,7 +62,7 @@ public partial class FamiliesTests
     [InlineData(true, true, true, false, true, 1, HttpStatusCode.BadRequest)]
     [InlineData(true, false, true, true, true, 0, HttpStatusCode.NotFound)]
     [InlineData(false, true, true, true, true, 0, HttpStatusCode.NotFound)]
-    public async Task Update_Family_Fail_Async(
+    public async Task UpdateFamily_ShouldReturnUnsuccessfulCode_WhenInvalidApiCallIsMade_Async(
         bool shouldSendValidId,
         bool shouldSendValidVersion,
         bool shouldSendInput,

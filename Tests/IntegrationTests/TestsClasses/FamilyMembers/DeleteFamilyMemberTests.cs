@@ -11,7 +11,7 @@ namespace IntegrationTests.TestsClasses.FamilyMembers;
 public partial class FamilyMembersTests
 {
     [Fact]
-    public async Task Delete_Family_Member_Success_Async()
+    public async Task DeleteFamilyMember_ShouldReturnNoContent_WhenValidQueryArgsAreSent_Async()
     {
         //Arrange
         var familyScheme = FamilyData.GetFamilyScheme();
@@ -37,7 +37,7 @@ public partial class FamilyMembersTests
 
     [Theory]
     [InlineData(true, 1, HttpStatusCode.BadRequest)]
-    public async Task Delete_Family_Member_Fail_Async(
+    public async Task DeleteFamilyMember_ShouldReturnBadRequest_WhenBadVersionIsSent_Async(
         bool isErrorOutputExpected,
         int errorCount,
         HttpStatusCode expectedHttpStatusCode)
@@ -70,4 +70,6 @@ public partial class FamilyMembersTests
             Assert.Equal(errorCount, errorOutput?.ValidationErrors?.Count ?? 0);
         }
     }
+
+    // TODO: Test for NotFound when Id is not in db should be added
 }

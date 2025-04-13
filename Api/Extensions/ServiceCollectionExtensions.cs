@@ -1,7 +1,9 @@
 ﻿using Api.HostedServices;
 using Api.ModelBinderProviders;
+using Api.Services;
 using Data.Extensions;
 using Domain.Extensions;
+using Domain.Services.Abstraction;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Extensions;
 using Shared.JsonConverters;
@@ -99,8 +101,16 @@ public static class ServiceCollectionExtensions
         IConfiguration configuration)
     {
         return services
+            .AddApiServices()
             .AddDataServices(configuration)
             .AddDomainServices()
             .AddSharedServices();
+    }
+
+    private static IServiceCollection AddApiServices(
+        this IServiceCollection services)
+    {
+        return services
+            .AddScoped<ICurrentTenant, CurrentTenant>();
     }
 }

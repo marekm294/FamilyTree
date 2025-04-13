@@ -1,5 +1,7 @@
 ﻿using Data.Configurations.Abstraction;
+using Data.Exceptions;
 using Data.Schemes;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Shared.Helpers.MaxLengthHelpers;
 
@@ -22,5 +24,11 @@ internal sealed class FamilyConfiguration : DbSchemeConfiguration<FamilyScheme>
             .WithOne()
             .HasForeignKey(fm => fm.FamilyId)
             .HasPrincipalKey(f => f.Id);
+
+        builder
+            .Tenant();
+
+        builder
+            .ToTable("Families");
     }
 }

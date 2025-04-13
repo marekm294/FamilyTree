@@ -1,5 +1,4 @@
-﻿
-using Domain.Services.Abstraction;
+﻿using Domain.Services.Abstraction;
 
 namespace Api.HostedServices;
 

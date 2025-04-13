@@ -1,5 +1,6 @@
 ﻿using Data;
 using IntegrationTests.TestsClasses.Families.Data;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using NetTopologySuite.Geometries;
@@ -10,13 +11,14 @@ using Shared.Types;
 using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
+using SystemTestsCore.Helpers;
 
 namespace IntegrationTests.TestsClasses.FamilyMembers;
 
 public partial class FamilyMembersTests
 {
     [Fact]
-    public async Task Create_Family_Member_Success_Async()
+    public async Task CreateFamilyMember_ShouldReturnCreated_WhenValidInputIsSent_Async()
     {
         //Arrange
         var familyScheme = FamilyData.GetFamilyScheme();
@@ -69,14 +71,21 @@ public partial class FamilyMembersTests
 
         using var assertScope = _serviceScope.ServiceProvider.CreateScope();
         var context = assertScope.ServiceProvider.GetRequiredService<AppDatabaseContext>();
-        Assert.True(await context.FamilyMembers.AnyAsync(fm => fm.Id == familyMemberOutput.Id));
+
+        var familyMemberFromDb = await context
+            .FamilyMembers
+            .IgnoreQueryFilters()
+            .FirstOrDefaultAsync(fm => fm.Id == familyMemberOutput.Id);
+
+        Assert.NotNull(familyMemberFromDb);
+        Assert.Equal(familyMemberFromDb.TenantId, Constants.TenantId1);
     }
 
     [Theory]
     [InlineData(false, true, true, 0, HttpStatusCode.BadRequest)]
     [InlineData(false, true, false, 0, HttpStatusCode.BadRequest)]
     [InlineData(true, true, true, 2, HttpStatusCode.BadRequest)]
-    public async Task Create_Family_Member_Fail_Async(
+    public async Task CreateFamilyMember_ShouldReturnUnsuccessfulCode_WhenInvalidApiCallIsMade_Async(
         bool shouldSendInput,
         bool isErrorOutputExpected,
         bool isFamilyInDb,

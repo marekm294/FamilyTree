@@ -3,7 +3,7 @@ using Shared.Models.Inputs.Families;
 
 namespace Domain.Entities;
 
-public interface IFamily : IEntity
+public interface IFamily : IEntity, ITenantable
 {
     string FamilyName { get; set; }
 

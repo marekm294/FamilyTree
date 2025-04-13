@@ -1,6 +1,8 @@
 ﻿using Data;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using SystemTestsCore.Helpers;
 
 namespace SystemTestsCore;
 
@@ -20,6 +22,9 @@ public class BaseFactoryCollectionTestClass<TDatabaseFixture, TFactory, TProgram
         _fixture = fixture ?? throw new ArgumentNullException(nameof(fixture));
         _testWebApplicationFactory = fixture.Factory;
         _httpClient = _testWebApplicationFactory.CreateClient();
+
+        // TODO: remove when TenantId is parsed from token.
+        _httpClient.DefaultRequestHeaders.Add("Tenant", Constants.TenantId1.ToString());
     }
 
     protected Task InitializeDatabaseAsync()
@@ -36,9 +41,9 @@ public class BaseFactoryCollectionTestClass<TDatabaseFixture, TFactory, TProgram
         var serviceScope = _testWebApplicationFactory.Services.CreateScope();
         var appDatabaseContext = serviceScope.ServiceProvider.GetRequiredService<AppDatabaseContext>();
 
-        appDatabaseContext.RemoveRange(appDatabaseContext.Weddings);
-        appDatabaseContext.RemoveRange(appDatabaseContext.FamilyMembers);
-        appDatabaseContext.RemoveRange(appDatabaseContext.Families);
+        appDatabaseContext.RemoveRange(appDatabaseContext.Weddings.IgnoreQueryFilters());
+        appDatabaseContext.RemoveRange(appDatabaseContext.FamilyMembers.IgnoreQueryFilters());
+        appDatabaseContext.RemoveRange(appDatabaseContext.Families.IgnoreQueryFilters());
 
         await appDatabaseContext.SaveChangesAsync();
     }

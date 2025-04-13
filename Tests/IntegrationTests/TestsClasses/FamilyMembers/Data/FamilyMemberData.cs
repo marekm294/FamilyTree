@@ -1,12 +1,14 @@
 ﻿using Data.Schemes;
 using Shared.Types;
+using SystemTestsCore.Helpers;
 
 namespace IntegrationTests.TestsClasses.FamilyMembers.Data;
 
 internal static class FamilyMemberData
 {
     public static FamilyMemberScheme GetFamilyMemberScheme(
-        int i = 0)
+        int i = 0,
+        bool shouldAddDefailtTenantId = true)
     {
         return new FamilyMemberScheme()
         {
@@ -26,6 +28,7 @@ internal static class FamilyMemberData
                 Date = new DateOnly(2058, 9, 21),
                 Place = new Place(),
             },
+            TenantId = shouldAddDefailtTenantId ? Constants.TenantId1 : default,
         };
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Domain.DataServicesAbstraction;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace Data.DomainServices;
 
@@ -11,5 +12,22 @@ internal sealed class QueryExecutor : IQueryExecutor
     {
         return query
             .ToListAsync(cancellationToken);
+    }
+
+    public Task<T?> FirstOrDefaultAsyncAsync<T>(
+        IQueryable<T> query,
+        CancellationToken cancellationToken = default)
+    {
+        return query
+            .FirstOrDefaultAsync(cancellationToken);
+    }
+
+    public Task<T?> FirstOrDefaultAsyncAsync<T>(
+        IQueryable<T> query,
+        Expression<Func<T, bool>> predicate,
+        CancellationToken cancellationToken = default)
+    {
+        return query
+            .FirstOrDefaultAsync(predicate, cancellationToken);
     }
 }

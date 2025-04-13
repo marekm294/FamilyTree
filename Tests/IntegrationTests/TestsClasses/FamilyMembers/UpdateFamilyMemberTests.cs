@@ -14,7 +14,7 @@ namespace IntegrationTests.TestsClasses.FamilyMembers;
 public partial class FamilyMembersTests
 {
     [Fact]
-    public async Task Update_Family_Member_Success_Async()
+    public async Task UpdateFamilyMember_ShouldReturnOk_WhenValidInputIsSent_Async()
     {
         //Arrange
         var familyScheme = FamilyData.GetFamilyScheme();
@@ -81,7 +81,7 @@ public partial class FamilyMembersTests
     [InlineData(true, true, true, false, true, 2, HttpStatusCode.BadRequest)]
     [InlineData(true, false, true, true, true, 0, HttpStatusCode.NotFound)]
     [InlineData(false, true, true, true, true, 0, HttpStatusCode.NotFound)]
-    public async Task Update_Family_Member_Fail_Async(
+    public async Task UpdateFamilyMember_ShouldReturnUnsuccessfulCode_WhenInvalidApiCallIsMade_Async(
         bool shouldSendValidId,
         bool shouldSendValidVersion,
         bool shouldSendInput,

@@ -29,7 +29,8 @@ public static class WebApplicationExtensions
     public static WebApplication UseMiddlewares(this WebApplication webApplication)
     {
         webApplication
-            .UseMiddleware<ErrorHandlingMiddlware>();
+            .UseMiddleware<ErrorHandlingMiddlware>()
+            .UseMiddleware<TenantMiddleware>();
 
         return webApplication;
     }

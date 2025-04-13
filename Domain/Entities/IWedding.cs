@@ -3,7 +3,7 @@ using Shared.Types;
 
 namespace Domain.Entities;
 
-public interface IWedding : IEntity
+public interface IWedding : IEntity, ITenantable
 {
     Guid? PartnerId1 { get; set; }
     Guid? PartnerId2 { get; set; }

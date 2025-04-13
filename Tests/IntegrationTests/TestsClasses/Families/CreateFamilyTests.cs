@@ -7,13 +7,14 @@ using Shared.Models.Outputs;
 using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
+using SystemTestsCore.Helpers;
 
 namespace IntegrationTests.TestsClasses.Families;
 
 public partial class FamiliesTests
 {
     [Fact]
-    public async Task Create_Family_Success_Async()
+    public async Task CreateFamily_ShouldReturnOk_WhenValidInputIsSent_Async()
     {
         //Arrange
         var createFamilyInput = new CreateFamilyInput()
@@ -39,13 +40,20 @@ public partial class FamiliesTests
 
         using var assertScope = _serviceScope.ServiceProvider.CreateScope();
         var context = assertScope.ServiceProvider.GetRequiredService<AppDatabaseContext>();
-        Assert.True(await context.Families.AnyAsync(fm => fm.Id == familyOutput.Id));
+
+        var familyFromDb = await context
+            .Families 
+            .IgnoreQueryFilters() 
+            .FirstOrDefaultAsync(fm => fm.Id == familyOutput.Id);
+
+        Assert.NotNull(familyFromDb);
+        Assert.Equal(familyFromDb!.TenantId, Constants.TenantId1);
     }
 
     [Theory]
     [InlineData(false, true, 0, HttpStatusCode.BadRequest)]
     [InlineData(true, true, 1, HttpStatusCode.BadRequest)]
-    public async Task Create_Family_Fail_Async(
+    public async Task CreateFamily_ShouldReturnUnsuccessfulStatusCode_Async(
         bool shouldSendInput,
         bool isErrorOutputExpected,
         int errorCount,

@@ -4,6 +4,7 @@ using DatabaseTests.TestClasses.Abstraction;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Shared.Types;
+using SystemTestsCore.Helpers;
 using Xunit.Abstractions;
 
 namespace DatabaseTests.TestClasses;
@@ -25,6 +26,7 @@ public class FamilyTests : FactoryCollectionTestClass
         {
             Id = Guid.NewGuid(),
             FamilyName = "FamilyName",
+            TenantId = Constants.TenantId1,
         };
         var familyMember1 = new FamilyMemberScheme()
         {
@@ -46,6 +48,7 @@ public class FamilyTests : FactoryCollectionTestClass
                 Place = new Place(),
             },
             FamilyId = family.Id,
+            TenantId = Constants.TenantId1,
         };
 
         await _appDatabaseContext.AddAsync(family);
