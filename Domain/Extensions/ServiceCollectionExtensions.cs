@@ -1,4 +1,6 @@
 ﻿using Domain.DataServices.Abstraction;
+using Domain.Emails;
+using Domain.Emails.Abstraction;
 using Domain.Services;
 using Domain.Services.Abstraction;
 using Microsoft.Extensions.DependencyInjection;
@@ -43,6 +45,8 @@ public static class ServiceCollectionExtensions
     private static IServiceCollection AddServices(this IServiceCollection services)
     {
         return services
+            .AddSingleton<ISmtpEmailSender, SmtpEmailSender>()
+            .AddSingleton<IEmailSender, EmailSender>()
             .AddSingleton<IDomainConfigurationService, DomainConfigurationService>();
     }
 }

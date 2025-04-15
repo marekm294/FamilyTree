@@ -2,6 +2,7 @@
 using Api.ModelBinderProviders;
 using Api.Services;
 using Data.Extensions;
+using Domain.Emails.Models;
 using Domain.Extensions;
 using Domain.Services.Abstraction;
 using Microsoft.AspNetCore.Mvc;
@@ -49,6 +50,7 @@ public static class ServiceCollectionExtensions
             .AddSwagger()
             .AddCors(configuration)
             .AddHostedServices(configuration)
+            .AddOptionConfigurations(configuration)
             .AddServices(configuration);
     }
 
@@ -94,6 +96,14 @@ public static class ServiceCollectionExtensions
 
         return services
             .AddHostedService<DomainConfigurationHostedService>();
+    }
+
+    public static IServiceCollection AddOptionConfigurations(
+        this IServiceCollection services,
+        IConfiguration configuration)
+    {
+        return services
+            .Configure<SmtpOptions>(configuration.GetSection(SmtpOptions.SEECTION_MANE));
     }
 
     private static IServiceCollection AddServices(
